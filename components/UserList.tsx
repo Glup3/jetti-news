@@ -1,8 +1,8 @@
 import React from 'react';
-import { useAllPlayersQuery } from '../generated/graphql';
+import { useGetAllPlayersQuery } from '../generated/graphql';
 
 function UserList() {
-  const { data, error, loading } = useAllPlayersQuery();
+  const { data, error, loading } = useGetAllPlayersQuery();
 
   if (loading) {
     return <div>Loading...</div>;
