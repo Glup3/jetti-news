@@ -1,0 +1,54 @@
+query GetMatches($take: Int!, $skip: Int!) {
+  matches(orderBy: { createdAt: desc }, take: $take, skip: $skip) {
+    createdAt
+    id
+    screenshotPath
+    matchResult
+    Team1 {
+      teamName
+      PlayerH1 {
+        userTag
+        skillLevel
+      }
+      PlayerH2 {
+        userTag
+        skillLevel
+      }
+      PlayerH3 {
+        userTag
+        skillLevel
+      }
+      PlayerH4 {
+        userTag
+        skillLevel
+      }
+      PlayerH5 {
+        userTag
+        skillLevel
+      }
+    }
+    Team2 {
+      teamName
+      PlayerH1 {
+        userTag
+        skillLevel
+      }
+      PlayerH2 {
+        userTag
+        skillLevel
+      }
+      PlayerH3 {
+        userTag
+        skillLevel
+      }
+      PlayerH4 {
+        userTag
+        skillLevel
+      }
+      PlayerH5 {
+        userTag
+        skillLevel
+      }
+    }
+  }
+}

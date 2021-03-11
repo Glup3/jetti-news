@@ -568,6 +568,59 @@ export type AllPlayersQuery = (
   )> }
 );
 
+export type GetMatchesQueryVariables = Exact<{
+  take: Scalars['Int'];
+  skip: Scalars['Int'];
+}>;
+
+
+export type GetMatchesQuery = (
+  { __typename?: 'Query' }
+  & { matches: Array<(
+    { __typename?: 'Match' }
+    & Pick<Match, 'createdAt' | 'id' | 'screenshotPath' | 'matchResult'>
+    & { Team1?: Maybe<(
+      { __typename?: 'Team' }
+      & Pick<Team, 'teamName'>
+      & { PlayerH1?: Maybe<(
+        { __typename?: 'PlayerH' }
+        & Pick<PlayerH, 'userTag' | 'skillLevel'>
+      )>, PlayerH2?: Maybe<(
+        { __typename?: 'PlayerH' }
+        & Pick<PlayerH, 'userTag' | 'skillLevel'>
+      )>, PlayerH3?: Maybe<(
+        { __typename?: 'PlayerH' }
+        & Pick<PlayerH, 'userTag' | 'skillLevel'>
+      )>, PlayerH4?: Maybe<(
+        { __typename?: 'PlayerH' }
+        & Pick<PlayerH, 'userTag' | 'skillLevel'>
+      )>, PlayerH5?: Maybe<(
+        { __typename?: 'PlayerH' }
+        & Pick<PlayerH, 'userTag' | 'skillLevel'>
+      )> }
+    )>, Team2?: Maybe<(
+      { __typename?: 'Team' }
+      & Pick<Team, 'teamName'>
+      & { PlayerH1?: Maybe<(
+        { __typename?: 'PlayerH' }
+        & Pick<PlayerH, 'userTag' | 'skillLevel'>
+      )>, PlayerH2?: Maybe<(
+        { __typename?: 'PlayerH' }
+        & Pick<PlayerH, 'userTag' | 'skillLevel'>
+      )>, PlayerH3?: Maybe<(
+        { __typename?: 'PlayerH' }
+        & Pick<PlayerH, 'userTag' | 'skillLevel'>
+      )>, PlayerH4?: Maybe<(
+        { __typename?: 'PlayerH' }
+        & Pick<PlayerH, 'userTag' | 'skillLevel'>
+      )>, PlayerH5?: Maybe<(
+        { __typename?: 'PlayerH' }
+        & Pick<PlayerH, 'userTag' | 'skillLevel'>
+      )> }
+    )> }
+  )> }
+);
+
 
 export const AllPlayersDocument = gql`
     query AllPlayers {
@@ -603,3 +656,88 @@ export function useAllPlayersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
 export type AllPlayersQueryHookResult = ReturnType<typeof useAllPlayersQuery>;
 export type AllPlayersLazyQueryHookResult = ReturnType<typeof useAllPlayersLazyQuery>;
 export type AllPlayersQueryResult = Apollo.QueryResult<AllPlayersQuery, AllPlayersQueryVariables>;
+export const GetMatchesDocument = gql`
+    query GetMatches($take: Int!, $skip: Int!) {
+  matches(orderBy: {createdAt: desc}, take: $take, skip: $skip) {
+    createdAt
+    id
+    screenshotPath
+    matchResult
+    Team1 {
+      teamName
+      PlayerH1 {
+        userTag
+        skillLevel
+      }
+      PlayerH2 {
+        userTag
+        skillLevel
+      }
+      PlayerH3 {
+        userTag
+        skillLevel
+      }
+      PlayerH4 {
+        userTag
+        skillLevel
+      }
+      PlayerH5 {
+        userTag
+        skillLevel
+      }
+    }
+    Team2 {
+      teamName
+      PlayerH1 {
+        userTag
+        skillLevel
+      }
+      PlayerH2 {
+        userTag
+        skillLevel
+      }
+      PlayerH3 {
+        userTag
+        skillLevel
+      }
+      PlayerH4 {
+        userTag
+        skillLevel
+      }
+      PlayerH5 {
+        userTag
+        skillLevel
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetMatchesQuery__
+ *
+ * To run a query within a React component, call `useGetMatchesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetMatchesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetMatchesQuery({
+ *   variables: {
+ *      take: // value for 'take'
+ *      skip: // value for 'skip'
+ *   },
+ * });
+ */
+export function useGetMatchesQuery(baseOptions: Apollo.QueryHookOptions<GetMatchesQuery, GetMatchesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetMatchesQuery, GetMatchesQueryVariables>(GetMatchesDocument, options);
+      }
+export function useGetMatchesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMatchesQuery, GetMatchesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetMatchesQuery, GetMatchesQueryVariables>(GetMatchesDocument, options);
+        }
+export type GetMatchesQueryHookResult = ReturnType<typeof useGetMatchesQuery>;
+export type GetMatchesLazyQueryHookResult = ReturnType<typeof useGetMatchesLazyQuery>;
+export type GetMatchesQueryResult = Apollo.QueryResult<GetMatchesQuery, GetMatchesQueryVariables>;
