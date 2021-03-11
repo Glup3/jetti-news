@@ -9,9 +9,11 @@ interface MatchListProps {
 function MatchList({ matches }: MatchListProps) {
   return (
     <div className="row g-3">
-      {matches.map((match, index) => (
-        <MatchCard key={index} match={match} />
-      ))}
+      {matches.length > 0 ? (
+        matches.map((match, index) => <MatchCard key={index} match={match} />)
+      ) : (
+        <div>No Matches found</div>
+      )}
     </div>
   );
 }

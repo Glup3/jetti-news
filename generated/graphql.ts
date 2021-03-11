@@ -618,7 +618,13 @@ export type GetMatchesQuery = (
         & Pick<PlayerH, 'userTag' | 'skillLevel'>
       )> }
     )> }
-  )> }
+  )>, aggregateMatch: (
+    { __typename?: 'AggregateMatch' }
+    & { count?: Maybe<(
+      { __typename?: 'MatchCountAggregate' }
+      & Pick<MatchCountAggregate, '_all'>
+    )> }
+  ) }
 );
 
 
@@ -708,6 +714,11 @@ export const GetMatchesDocument = gql`
         userTag
         skillLevel
       }
+    }
+  }
+  aggregateMatch {
+    count {
+      _all
     }
   }
 }

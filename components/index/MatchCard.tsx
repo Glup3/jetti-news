@@ -20,7 +20,9 @@ function MatchCard({ match }: MatchCardProps) {
           </p>
         </div>
         {match.screenshotPath && (
-          <img src={match.screenshotPath} className="card-img-bottom p-2" alt="Match Screenshot"></img>
+          <a href={match.screenshotPath} target="_blank" rel="noreferrer">
+            <img src={match.screenshotPath} className="card-img-bottom p-2" alt="Match Screenshot"></img>
+          </a>
         )}
       </div>
     </div>

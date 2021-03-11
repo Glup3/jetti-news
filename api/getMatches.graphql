@@ -51,4 +51,9 @@ query GetMatches($take: Int!, $skip: Int!) {
       }
     }
   }
+  aggregateMatch {
+    count {
+      _all
+    }
+  }
 }
