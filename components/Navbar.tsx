@@ -1,38 +1,36 @@
 import React from 'react';
+import Link from 'next/link';
+import classNames from 'classnames';
+import { useRouter } from 'next/router';
 
-export default function Navbar() {
+const routes = [
+  { link: '/', name: 'Home' },
+  { link: '/heroes', name: 'Heroes' },
+];
+
+function Navbar() {
+  const { pathname } = useRouter();
+
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+    <nav className="navbar navbar-expand navbar-light bg-light">
       <div className="container-fluid">
-        <a className="navbar-brand" href="#">
-          Jetti UI
-        </a>
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-            <li className="nav-item">
-              <a className="nav-link active" aria-current="page" href="#">
-                Home
-              </a>
+        <ul className="navbar-nav">
+          <li className="nav-item">
+            <Link href="/" passHref>
+              <a className="nav-link active navbar-brand">Jetti News</a>
+            </Link>
+          </li>
+          {routes.map((route, i) => (
+            <li key={i} className="nav-item">
+              <Link href={route.link} passHref>
+                <a className={classNames('nav-link', { active: pathname == route.link })}>{route.name}</a>
+              </Link>
             </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">
-                Information
-              </a>
-            </li>
-          </ul>
-        </div>
+          ))}
+        </ul>
       </div>
     </nav>
   );
 }
+
+export default Navbar;

@@ -1,5 +1,0 @@
-query AllPlayers {
-  findManyPlayers {
-    userTag
-  }
-}

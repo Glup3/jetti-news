@@ -1,0 +1,8 @@
+query GetAllPlayers {
+  findManyPlayers(orderBy: { skillLevel: desc }) {
+    userId
+    userTag
+    skillLevel
+    createdAt
+  }
+}

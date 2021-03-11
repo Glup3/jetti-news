@@ -557,14 +557,14 @@ export enum TeamScalarFieldEnum {
   UpdatedAt = 'updatedAt'
 }
 
-export type AllPlayersQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetAllPlayersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AllPlayersQuery = (
+export type GetAllPlayersQuery = (
   { __typename?: 'Query' }
   & { findManyPlayers: Array<(
     { __typename?: 'Players' }
-    & Pick<Players, 'userTag'>
+    & Pick<Players, 'userId' | 'userTag' | 'skillLevel' | 'createdAt'>
   )> }
 );
 
@@ -628,40 +628,43 @@ export type GetMatchesQuery = (
 );
 
 
-export const AllPlayersDocument = gql`
-    query AllPlayers {
-  findManyPlayers {
+export const GetAllPlayersDocument = gql`
+    query GetAllPlayers {
+  findManyPlayers(orderBy: {skillLevel: desc}) {
+    userId
     userTag
+    skillLevel
+    createdAt
   }
 }
     `;
 
 /**
- * __useAllPlayersQuery__
+ * __useGetAllPlayersQuery__
  *
- * To run a query within a React component, call `useAllPlayersQuery` and pass it any options that fit your needs.
- * When your component renders, `useAllPlayersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetAllPlayersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllPlayersQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useAllPlayersQuery({
+ * const { data, loading, error } = useGetAllPlayersQuery({
  *   variables: {
  *   },
  * });
  */
-export function useAllPlayersQuery(baseOptions?: Apollo.QueryHookOptions<AllPlayersQuery, AllPlayersQueryVariables>) {
+export function useGetAllPlayersQuery(baseOptions?: Apollo.QueryHookOptions<GetAllPlayersQuery, GetAllPlayersQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<AllPlayersQuery, AllPlayersQueryVariables>(AllPlayersDocument, options);
+        return Apollo.useQuery<GetAllPlayersQuery, GetAllPlayersQueryVariables>(GetAllPlayersDocument, options);
       }
-export function useAllPlayersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AllPlayersQuery, AllPlayersQueryVariables>) {
+export function useGetAllPlayersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllPlayersQuery, GetAllPlayersQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<AllPlayersQuery, AllPlayersQueryVariables>(AllPlayersDocument, options);
+          return Apollo.useLazyQuery<GetAllPlayersQuery, GetAllPlayersQueryVariables>(GetAllPlayersDocument, options);
         }
-export type AllPlayersQueryHookResult = ReturnType<typeof useAllPlayersQuery>;
-export type AllPlayersLazyQueryHookResult = ReturnType<typeof useAllPlayersLazyQuery>;
-export type AllPlayersQueryResult = Apollo.QueryResult<AllPlayersQuery, AllPlayersQueryVariables>;
+export type GetAllPlayersQueryHookResult = ReturnType<typeof useGetAllPlayersQuery>;
+export type GetAllPlayersLazyQueryHookResult = ReturnType<typeof useGetAllPlayersLazyQuery>;
+export type GetAllPlayersQueryResult = Apollo.QueryResult<GetAllPlayersQuery, GetAllPlayersQueryVariables>;
 export const GetMatchesDocument = gql`
     query GetMatches($take: Int!, $skip: Int!) {
   matches(orderBy: {createdAt: desc}, take: $take, skip: $skip) {
