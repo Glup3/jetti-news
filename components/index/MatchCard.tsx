@@ -23,12 +23,16 @@ function MatchCard({ match }: MatchCardProps) {
             <TeamList won={match.matchResult == 2} team={match.Team2} />
           </div>
           <p className="card-text mt-2">
-            <small className="text-muted">{date}</small>
+            <small className={styles.date}>{date}</small>
           </p>
         </div>
         {match.screenshotPath && (
-          <a href={match.screenshotPath} target="_blank" rel="noreferrer">
-            <img src={match.screenshotPath} className="card-img-bottom p-2" alt="Match Screenshot"></img>
+          <a href={match.screenshotPath} className="m-2" target="_blank" rel="noreferrer">
+            <img
+              src={match.screenshotPath}
+              className={classNames('card-img-bottom', styles.border)}
+              alt="Match Screenshot"
+            ></img>
           </a>
         )}
       </div>

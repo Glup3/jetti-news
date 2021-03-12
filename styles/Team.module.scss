@@ -3,14 +3,10 @@
 @import "../node_modules/bootstrap/scss/mixins";
 @import "./variables";
 
-.card {
-  background-color: #212121;
+.header {
+  color: $purple-400;
 }
 
-.border {
-  border: 1px solid $gray-500;
-}
-
-.date {
-  color: $text-color-disabled;
+.player {
+  color: $text-color-high;
 }
