@@ -1,0 +1,6 @@
+query GetPlayer($id: Int!) {
+  player: findUniquePlayers(where: { id: $id }) {
+    userTag
+    skillLevel
+  }
+}
