@@ -12,7 +12,7 @@ function Navbar() {
   const { pathname } = useRouter();
 
   return (
-    <nav className="navbar navbar-expand navbar-light bg-light">
+    <nav className="navbar navbar-expand navbar-dark bg-surface">
       <div className="container-fluid">
         <ul className="navbar-nav">
           <li className="nav-item">

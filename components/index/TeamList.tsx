@@ -1,6 +1,5 @@
 import React from 'react';
 import classNames from 'classnames';
-import styles from '../../styles/Team.module.scss';
 
 import { GetMatchesQuery } from '../../generated/graphql';
 import RankIcon from '../RankIcon';
@@ -15,10 +14,10 @@ function TeamList({ team, won }: TeamListProps) {
   return (
     <div className="col-sm">
       <div>
-        <h2 className={classNames('d-inline-block', styles.header)}>Team {team.teamName}</h2>
+        <h2 className={classNames('d-inline-block text-high')}>Team {team.teamName}</h2>
         {won && <WinnerBadge />}
       </div>
-      <div className={styles.player}>
+      <div className="text-medium">
         <div>
           <RankIcon skillLevel={team.PlayerH1.skillLevel} /> {team.PlayerH1.userTag}
         </div>
