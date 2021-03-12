@@ -1,7 +1,18 @@
 @import '../node_modules/bootstrap/scss/functions';
 @import '../node_modules/bootstrap/scss/variables';
 @import '../node_modules/bootstrap/scss/mixins';
+@import './variables';
 
 body {
   background-color: #121212;
+  color: $text-color-medium;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: $text-color-high;
 }

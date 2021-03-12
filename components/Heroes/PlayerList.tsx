@@ -3,12 +3,13 @@ import { DateTime } from 'luxon';
 
 import { useGetAllPlayersQuery } from '../../generated/graphql';
 import RankIcon from '../RankIcon';
+import LoadingSpinner from '../LoadingSpinner';
 
 function PlayerList() {
   const { data, loading, error } = useGetAllPlayersQuery();
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <LoadingSpinner />;
   }
 
   if (error) {
