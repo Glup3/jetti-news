@@ -24,10 +24,9 @@ function PlayerList() {
         return (
           <div className="list-group-item" key={player.userId}>
             <RankIcon skillLevel={player.skillLevel} />
-            <span className="ms-1">{player.userTag}</span>
-            <p>
-              <small className="text-muted">joined {joinDate}</small>
-            </p>
+            <span className="ms-1 text-high">{player.userTag}</span>
+
+            <small className="text-disabled d-block mt-2">joined {joinDate}</small>
           </div>
         );
       })}
