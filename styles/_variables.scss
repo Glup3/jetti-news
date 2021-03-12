@@ -1,5 +1,10 @@
+@import "../node_modules/bootstrap/scss/variables";
+
+$my-primary: $purple-600;
+
 $text-color-high: rgba(255, 255, 255, 0.87);
 $text-color-medium: rgba(255, 255, 255, 0.6);
 $text-color-disabled: rgba(255, 255, 255, 0.38);
 
 $surface-color: #212121;
+$surface-color-2: #1d1d1d;

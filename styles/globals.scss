@@ -3,7 +3,6 @@
 @import "../node_modules/bootstrap/scss/mixins";
 @import "./variables";
 
-$my-primary: $purple-600;
 $body-bg: #121212;
 $body-color: $text-color-medium;
 $headings-color: $text-color-high;
@@ -11,7 +10,7 @@ $headings-color: $text-color-high;
 $pagination-surface-color: $surface-color;
 $pagination-color: $purple-300;
 $pagination-bg: $pagination-surface-color;
-$pagination-border-color: $gray-700;
+$pagination-border-color: $gray-800;
 
 $pagination-focus-color: $text-color-high;
 $pagination-focus-bg: $my-primary;
@@ -34,7 +33,7 @@ $navbar-dark-active-color: $purple-300;
 
 $theme-colors: (
   "surface": $surface-color,
-  "surface2": #1d1d1d,
+  "surface2": $surface-color-2,
   "high": $text-color-high,
   "medium": $text-color-medium,
   "disabled": $text-color-disabled,
