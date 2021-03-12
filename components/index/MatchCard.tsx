@@ -1,8 +1,11 @@
 import React from 'react';
 import { DateTime } from 'luxon';
+import classNames from 'classnames';
 
 import { GetMatchesQuery } from '../../generated/graphql';
 import TeamList from './TeamList';
+
+import styles from '../../styles/Card.module.scss';
 
 interface MatchCardProps {
   match: GetMatchesQuery['matches'][number];
@@ -13,7 +16,7 @@ function MatchCard({ match }: MatchCardProps) {
 
   return (
     <div className="col-lg-6">
-      <div className="card h-100">
+      <div className={classNames('card card-dark h-100', styles.card)}>
         <div className="card-body">
           <div className="row">
             <TeamList won={match.matchResult == 1} team={match.Team1} />

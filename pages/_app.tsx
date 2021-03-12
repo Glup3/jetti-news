@@ -3,7 +3,7 @@ import { ApolloProvider } from '@apollo/client';
 import { useApollo } from '../lib/apolloClient';
 
 import 'bootstrap/dist/css/bootstrap.css';
-import '../styles/globals.css';
+import '../styles/globals.scss';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
