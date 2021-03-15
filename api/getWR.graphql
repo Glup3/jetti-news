@@ -1,0 +1,97 @@
+query GetWR($id: Int!) {
+  gamesWon: aggregateMatch(
+    where: {
+      OR: [
+        {
+          Team1: {
+            is: {
+              AND: [
+                { Match1: { every: { matchResult: { equals: 1 } } } }
+                {
+                  OR: [
+                    { PlayerH1: { is: { playerId: { equals: $id } } } }
+                    { PlayerH2: { is: { playerId: { equals: $id } } } }
+                    { PlayerH3: { is: { playerId: { equals: $id } } } }
+                    { PlayerH4: { is: { playerId: { equals: $id } } } }
+                    { PlayerH5: { is: { playerId: { equals: $id } } } }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+        {
+          Team2: {
+            is: {
+              AND: [
+                { Match2: { every: { matchResult: { equals: 2 } } } }
+                {
+                  OR: [
+                    { PlayerH1: { is: { playerId: { equals: $id } } } }
+                    { PlayerH2: { is: { playerId: { equals: $id } } } }
+                    { PlayerH3: { is: { playerId: { equals: $id } } } }
+                    { PlayerH4: { is: { playerId: { equals: $id } } } }
+                    { PlayerH5: { is: { playerId: { equals: $id } } } }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ) {
+    count {
+      all: _all
+    }
+  }
+  gamesLost: aggregateMatch(
+    where: {
+      OR: [
+        {
+          Team1: {
+            is: {
+              AND: [
+                { Match1: { every: { matchResult: { equals: 2 } } } }
+                {
+                  OR: [
+                    { PlayerH1: { is: { playerId: { equals: $id } } } }
+                    { PlayerH2: { is: { playerId: { equals: $id } } } }
+                    { PlayerH3: { is: { playerId: { equals: $id } } } }
+                    { PlayerH4: { is: { playerId: { equals: $id } } } }
+                    { PlayerH5: { is: { playerId: { equals: $id } } } }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+        {
+          Team2: {
+            is: {
+              AND: [
+                { Match2: { every: { matchResult: { equals: 1 } } } }
+                {
+                  OR: [
+                    { PlayerH1: { is: { playerId: { equals: $id } } } }
+                    { PlayerH2: { is: { playerId: { equals: $id } } } }
+                    { PlayerH3: { is: { playerId: { equals: $id } } } }
+                    { PlayerH4: { is: { playerId: { equals: $id } } } }
+                    { PlayerH5: { is: { playerId: { equals: $id } } } }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ) {
+    count {
+      all: _all
+    }
+  }
+  player: findUniquePlayers(where: { id: $id }) {
+    skillLevel
+  }
+}

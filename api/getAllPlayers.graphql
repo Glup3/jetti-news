@@ -1,6 +1,7 @@
 query GetAllPlayers {
   findManyPlayers(orderBy: { skillLevel: desc }) {
-    userId
+    id
+    discordId: userId
     userTag
     skillLevel
     createdAt

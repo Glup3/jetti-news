@@ -1,5 +1,6 @@
 import React from 'react';
 import { DateTime } from 'luxon';
+import Link from 'next/link';
 
 import { useGetAllPlayersQuery } from '../../generated/graphql';
 import RankIcon from '../RankIcon';
@@ -22,12 +23,14 @@ function PlayerList() {
         const joinDate = DateTime.fromISO(player.createdAt).toLocaleString(DateTime.DATETIME_FULL);
 
         return (
-          <div className="list-group-item" key={player.userId}>
-            <RankIcon skillLevel={player.skillLevel} />
-            <span className="ms-1 text-high">{player.userTag}</span>
+          <Link key={player.discordId} href={`/heroes/${player.id}`}>
+            <a className="list-group-item list-group-item-action">
+              <RankIcon skillLevel={player.skillLevel} />
+              <span className="ms-1 text-high">{player.userTag}</span>
 
-            <small className="text-disabled d-block mt-2">joined {joinDate}</small>
-          </div>
+              <small className="text-disabled d-block mt-2">joined {joinDate}</small>
+            </a>
+          </Link>
         );
       })}
     </div>

@@ -564,7 +564,8 @@ export type GetAllPlayersQuery = (
   { __typename?: 'Query' }
   & { findManyPlayers: Array<(
     { __typename?: 'Players' }
-    & Pick<Players, 'userId' | 'userTag' | 'skillLevel' | 'createdAt'>
+    & Pick<Players, 'id' | 'userTag' | 'skillLevel' | 'createdAt'>
+    & { discordId: Players['userId'] }
   )> }
 );
 
@@ -636,7 +637,32 @@ export type GetPlayerQuery = (
   { __typename?: 'Query' }
   & { player?: Maybe<(
     { __typename?: 'Players' }
-    & Pick<Players, 'userTag' | 'skillLevel'>
+    & Pick<Players, 'userTag'>
+  )> }
+);
+
+export type GetWrQueryVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type GetWrQuery = (
+  { __typename?: 'Query' }
+  & { gamesWon: (
+    { __typename?: 'AggregateMatch' }
+    & { count?: Maybe<(
+      { __typename?: 'MatchCountAggregate' }
+      & { all: MatchCountAggregate['_all'] }
+    )> }
+  ), gamesLost: (
+    { __typename?: 'AggregateMatch' }
+    & { count?: Maybe<(
+      { __typename?: 'MatchCountAggregate' }
+      & { all: MatchCountAggregate['_all'] }
+    )> }
+  ), player?: Maybe<(
+    { __typename?: 'Players' }
+    & Pick<Players, 'skillLevel'>
   )> }
 );
 
@@ -644,7 +670,8 @@ export type GetPlayerQuery = (
 export const GetAllPlayersDocument = gql`
     query GetAllPlayers {
   findManyPlayers(orderBy: {skillLevel: desc}) {
-    userId
+    id
+    discordId: userId
     userTag
     skillLevel
     createdAt
@@ -772,7 +799,6 @@ export const GetPlayerDocument = gql`
     query GetPlayer($id: Int!) {
   player: findUniquePlayers(where: {id: $id}) {
     userTag
-    skillLevel
   }
 }
     `;
@@ -804,3 +830,52 @@ export function useGetPlayerLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<
 export type GetPlayerQueryHookResult = ReturnType<typeof useGetPlayerQuery>;
 export type GetPlayerLazyQueryHookResult = ReturnType<typeof useGetPlayerLazyQuery>;
 export type GetPlayerQueryResult = Apollo.QueryResult<GetPlayerQuery, GetPlayerQueryVariables>;
+export const GetWrDocument = gql`
+    query GetWR($id: Int!) {
+  gamesWon: aggregateMatch(
+    where: {OR: [{Team1: {is: {AND: [{Match1: {every: {matchResult: {equals: 1}}}}, {OR: [{PlayerH1: {is: {playerId: {equals: $id}}}}, {PlayerH2: {is: {playerId: {equals: $id}}}}, {PlayerH3: {is: {playerId: {equals: $id}}}}, {PlayerH4: {is: {playerId: {equals: $id}}}}, {PlayerH5: {is: {playerId: {equals: $id}}}}]}]}}}, {Team2: {is: {AND: [{Match2: {every: {matchResult: {equals: 2}}}}, {OR: [{PlayerH1: {is: {playerId: {equals: $id}}}}, {PlayerH2: {is: {playerId: {equals: $id}}}}, {PlayerH3: {is: {playerId: {equals: $id}}}}, {PlayerH4: {is: {playerId: {equals: $id}}}}, {PlayerH5: {is: {playerId: {equals: $id}}}}]}]}}}]}
+  ) {
+    count {
+      all: _all
+    }
+  }
+  gamesLost: aggregateMatch(
+    where: {OR: [{Team1: {is: {AND: [{Match1: {every: {matchResult: {equals: 2}}}}, {OR: [{PlayerH1: {is: {playerId: {equals: $id}}}}, {PlayerH2: {is: {playerId: {equals: $id}}}}, {PlayerH3: {is: {playerId: {equals: $id}}}}, {PlayerH4: {is: {playerId: {equals: $id}}}}, {PlayerH5: {is: {playerId: {equals: $id}}}}]}]}}}, {Team2: {is: {AND: [{Match2: {every: {matchResult: {equals: 1}}}}, {OR: [{PlayerH1: {is: {playerId: {equals: $id}}}}, {PlayerH2: {is: {playerId: {equals: $id}}}}, {PlayerH3: {is: {playerId: {equals: $id}}}}, {PlayerH4: {is: {playerId: {equals: $id}}}}, {PlayerH5: {is: {playerId: {equals: $id}}}}]}]}}}]}
+  ) {
+    count {
+      all: _all
+    }
+  }
+  player: findUniquePlayers(where: {id: $id}) {
+    skillLevel
+  }
+}
+    `;
+
+/**
+ * __useGetWrQuery__
+ *
+ * To run a query within a React component, call `useGetWrQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetWrQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetWrQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetWrQuery(baseOptions: Apollo.QueryHookOptions<GetWrQuery, GetWrQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetWrQuery, GetWrQueryVariables>(GetWrDocument, options);
+      }
+export function useGetWrLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetWrQuery, GetWrQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetWrQuery, GetWrQueryVariables>(GetWrDocument, options);
+        }
+export type GetWrQueryHookResult = ReturnType<typeof useGetWrQuery>;
+export type GetWrLazyQueryHookResult = ReturnType<typeof useGetWrLazyQuery>;
+export type GetWrQueryResult = Apollo.QueryResult<GetWrQuery, GetWrQueryVariables>;
