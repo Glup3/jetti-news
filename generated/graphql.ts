@@ -641,6 +641,65 @@ export type GetPlayerQuery = (
   )> }
 );
 
+export type GetRecentAndWonMatchesFromPlayerQueryVariables = Exact<{
+  id: Scalars['Int'];
+  amount: Scalars['Int'];
+}>;
+
+
+export type GetRecentAndWonMatchesFromPlayerQuery = (
+  { __typename?: 'Query' }
+  & { matches: Array<(
+    { __typename?: 'Match' }
+    & Pick<Match, 'id' | 'createdAt'>
+    & { Team1?: Maybe<(
+      { __typename?: 'Team' }
+      & Pick<Team, 'teamName'>
+      & { PlayerH1?: Maybe<(
+        { __typename?: 'PlayerH' }
+        & Pick<PlayerH, 'skillLevel' | 'userTag'>
+      )>, PlayerH2?: Maybe<(
+        { __typename?: 'PlayerH' }
+        & Pick<PlayerH, 'skillLevel' | 'userTag'>
+      )>, PlayerH3?: Maybe<(
+        { __typename?: 'PlayerH' }
+        & Pick<PlayerH, 'skillLevel' | 'userTag'>
+      )>, PlayerH4?: Maybe<(
+        { __typename?: 'PlayerH' }
+        & Pick<PlayerH, 'skillLevel' | 'userTag'>
+      )>, PlayerH5?: Maybe<(
+        { __typename?: 'PlayerH' }
+        & Pick<PlayerH, 'skillLevel' | 'userTag'>
+      )> }
+    )>, Team2?: Maybe<(
+      { __typename?: 'Team' }
+      & Pick<Team, 'teamName'>
+      & { PlayerH1?: Maybe<(
+        { __typename?: 'PlayerH' }
+        & Pick<PlayerH, 'skillLevel' | 'userTag'>
+      )>, PlayerH2?: Maybe<(
+        { __typename?: 'PlayerH' }
+        & Pick<PlayerH, 'skillLevel' | 'userTag'>
+      )>, PlayerH3?: Maybe<(
+        { __typename?: 'PlayerH' }
+        & Pick<PlayerH, 'skillLevel' | 'userTag'>
+      )>, PlayerH4?: Maybe<(
+        { __typename?: 'PlayerH' }
+        & Pick<PlayerH, 'skillLevel' | 'userTag'>
+      )>, PlayerH5?: Maybe<(
+        { __typename?: 'PlayerH' }
+        & Pick<PlayerH, 'skillLevel' | 'userTag'>
+      )> }
+    )> }
+  )>, wonMatches: Array<(
+    { __typename?: 'Match' }
+    & Pick<Match, 'id'>
+  )>, player?: Maybe<(
+    { __typename?: 'Players' }
+    & Pick<Players, 'id' | 'userTag'>
+  )> }
+);
+
 export type GetWrQueryVariables = Exact<{
   id: Scalars['Int'];
 }>;
@@ -830,6 +889,104 @@ export function useGetPlayerLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<
 export type GetPlayerQueryHookResult = ReturnType<typeof useGetPlayerQuery>;
 export type GetPlayerLazyQueryHookResult = ReturnType<typeof useGetPlayerLazyQuery>;
 export type GetPlayerQueryResult = Apollo.QueryResult<GetPlayerQuery, GetPlayerQueryVariables>;
+export const GetRecentAndWonMatchesFromPlayerDocument = gql`
+    query GetRecentAndWonMatchesFromPlayer($id: Int!, $amount: Int!) {
+  matches(
+    orderBy: {createdAt: desc}
+    take: $amount
+    where: {OR: [{Team1: {is: {OR: [{PlayerH1: {is: {playerId: {equals: $id}}}}, {PlayerH2: {is: {playerId: {equals: $id}}}}, {PlayerH3: {is: {playerId: {equals: $id}}}}, {PlayerH4: {is: {playerId: {equals: $id}}}}, {PlayerH5: {is: {playerId: {equals: $id}}}}]}}}, {Team2: {is: {OR: [{PlayerH1: {is: {playerId: {equals: $id}}}}, {PlayerH2: {is: {playerId: {equals: $id}}}}, {PlayerH3: {is: {playerId: {equals: $id}}}}, {PlayerH4: {is: {playerId: {equals: $id}}}}, {PlayerH5: {is: {playerId: {equals: $id}}}}]}}}]}
+  ) {
+    id
+    createdAt
+    Team1 {
+      teamName
+      PlayerH1 {
+        skillLevel
+        userTag
+      }
+      PlayerH2 {
+        skillLevel
+        userTag
+      }
+      PlayerH3 {
+        skillLevel
+        userTag
+      }
+      PlayerH4 {
+        skillLevel
+        userTag
+      }
+      PlayerH5 {
+        skillLevel
+        userTag
+      }
+    }
+    Team2 {
+      teamName
+      PlayerH1 {
+        skillLevel
+        userTag
+      }
+      PlayerH2 {
+        skillLevel
+        userTag
+      }
+      PlayerH3 {
+        skillLevel
+        userTag
+      }
+      PlayerH4 {
+        skillLevel
+        userTag
+      }
+      PlayerH5 {
+        skillLevel
+        userTag
+      }
+    }
+  }
+  wonMatches: matches(
+    orderBy: {createdAt: desc}
+    take: $amount
+    where: {OR: [{Team1: {is: {AND: [{Match1: {every: {matchResult: {equals: 1}}}}, {OR: [{PlayerH1: {is: {playerId: {equals: $id}}}}, {PlayerH2: {is: {playerId: {equals: $id}}}}, {PlayerH3: {is: {playerId: {equals: $id}}}}, {PlayerH4: {is: {playerId: {equals: $id}}}}, {PlayerH5: {is: {playerId: {equals: $id}}}}]}]}}}, {Team2: {is: {AND: [{Match2: {every: {matchResult: {equals: 2}}}}, {OR: [{PlayerH1: {is: {playerId: {equals: $id}}}}, {PlayerH2: {is: {playerId: {equals: $id}}}}, {PlayerH3: {is: {playerId: {equals: $id}}}}, {PlayerH4: {is: {playerId: {equals: $id}}}}, {PlayerH5: {is: {playerId: {equals: $id}}}}]}]}}}]}
+  ) {
+    id
+  }
+  player: findUniquePlayers(where: {id: $id}) {
+    id
+    userTag
+  }
+}
+    `;
+
+/**
+ * __useGetRecentAndWonMatchesFromPlayerQuery__
+ *
+ * To run a query within a React component, call `useGetRecentAndWonMatchesFromPlayerQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetRecentAndWonMatchesFromPlayerQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetRecentAndWonMatchesFromPlayerQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *      amount: // value for 'amount'
+ *   },
+ * });
+ */
+export function useGetRecentAndWonMatchesFromPlayerQuery(baseOptions: Apollo.QueryHookOptions<GetRecentAndWonMatchesFromPlayerQuery, GetRecentAndWonMatchesFromPlayerQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetRecentAndWonMatchesFromPlayerQuery, GetRecentAndWonMatchesFromPlayerQueryVariables>(GetRecentAndWonMatchesFromPlayerDocument, options);
+      }
+export function useGetRecentAndWonMatchesFromPlayerLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetRecentAndWonMatchesFromPlayerQuery, GetRecentAndWonMatchesFromPlayerQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetRecentAndWonMatchesFromPlayerQuery, GetRecentAndWonMatchesFromPlayerQueryVariables>(GetRecentAndWonMatchesFromPlayerDocument, options);
+        }
+export type GetRecentAndWonMatchesFromPlayerQueryHookResult = ReturnType<typeof useGetRecentAndWonMatchesFromPlayerQuery>;
+export type GetRecentAndWonMatchesFromPlayerLazyQueryHookResult = ReturnType<typeof useGetRecentAndWonMatchesFromPlayerLazyQuery>;
+export type GetRecentAndWonMatchesFromPlayerQueryResult = Apollo.QueryResult<GetRecentAndWonMatchesFromPlayerQuery, GetRecentAndWonMatchesFromPlayerQueryVariables>;
 export const GetWrDocument = gql`
     query GetWR($id: Int!) {
   gamesWon: aggregateMatch(

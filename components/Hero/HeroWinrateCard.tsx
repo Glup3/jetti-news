@@ -22,18 +22,17 @@ function HeroWinrateCard({ userId }: HeroWinrateCardProps) {
   const total = data.gamesWon.count.all + data.gamesLost.count.all;
 
   return (
-    <div className="col-lg-3">
-      <div className="card card-dark h-100 bg-surface">
-        <div className="card-body row">
-          <div className="col">
-            <RankIcon skillLevel={data.player.skillLevel} size={100} />
-          </div>
-          <div className="col">
-            <div>{total} Games</div>
-            <div>{data.gamesWon.count.all} Wins</div>
-            <div>{data.gamesLost.count.all} Loss</div>
-            <div>{((100 / total) * data.gamesWon.count.all).toFixed(2)}% Winrate</div>
-          </div>
+    <div className="card h-100 bg-surface">
+      <div className="card-body row">
+        <h5 className="card-title">General Stats - Winrate</h5>
+        <div className="col">
+          <RankIcon skillLevel={data.player?.skillLevel} size={100} />
+        </div>
+        <div className="col">
+          <div>{total} Games</div>
+          <div>{data.gamesWon.count.all} Wins</div>
+          <div>{data.gamesLost.count.all} Loss</div>
+          <div>{((100 / total) * data.gamesWon.count.all).toFixed(2)}% Winrate</div>
         </div>
       </div>
     </div>

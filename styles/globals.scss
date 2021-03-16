@@ -33,6 +33,7 @@ $navbar-dark-active-color: $purple-300;
 
 $list-group-bg: $surface-color;
 $list-group-hover-bg: $purple-600;
+$list-group-action-active-bg: $purple-800;
 
 $theme-colors: (
   "surface": $surface-color,
@@ -41,6 +42,7 @@ $theme-colors: (
   "medium": $text-color-medium,
   "disabled": $text-color-disabled,
   "my-primary": $my-primary,
+  "my-primary-light": $purple-400,
 );
 
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
