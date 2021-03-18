@@ -1,0 +1,218 @@
+query GetAlinaStats($id: Int!) {
+  lostAgainstAlina: aggregateMatch(
+    where: {
+      OR: [
+        {
+          AND: [
+            { matchResult: { equals: 2 } }
+            {
+              Team1: {
+                is: {
+                  OR: [
+                    { PlayerH1: { is: { playerId: { equals: $id } } } }
+                    { PlayerH2: { is: { playerId: { equals: $id } } } }
+                    { PlayerH3: { is: { playerId: { equals: $id } } } }
+                    { PlayerH4: { is: { playerId: { equals: $id } } } }
+                    { PlayerH5: { is: { playerId: { equals: $id } } } }
+                  ]
+                }
+              }
+            }
+            {
+              Team2: {
+                is: {
+                  OR: [
+                    { PlayerH1: { is: { playerId: { equals: 11 } } } }
+                    { PlayerH2: { is: { playerId: { equals: 11 } } } }
+                    { PlayerH3: { is: { playerId: { equals: 11 } } } }
+                    { PlayerH4: { is: { playerId: { equals: 11 } } } }
+                    { PlayerH5: { is: { playerId: { equals: 11 } } } }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+        {
+          AND: [
+            { matchResult: { equals: 1 } }
+            {
+              Team2: {
+                is: {
+                  OR: [
+                    { PlayerH1: { is: { playerId: { equals: $id } } } }
+                    { PlayerH2: { is: { playerId: { equals: $id } } } }
+                    { PlayerH3: { is: { playerId: { equals: $id } } } }
+                    { PlayerH4: { is: { playerId: { equals: $id } } } }
+                    { PlayerH5: { is: { playerId: { equals: $id } } } }
+                  ]
+                }
+              }
+            }
+            {
+              Team1: {
+                is: {
+                  OR: [
+                    { PlayerH1: { is: { playerId: { equals: 11 } } } }
+                    { PlayerH2: { is: { playerId: { equals: 11 } } } }
+                    { PlayerH3: { is: { playerId: { equals: 11 } } } }
+                    { PlayerH4: { is: { playerId: { equals: 11 } } } }
+                    { PlayerH5: { is: { playerId: { equals: 11 } } } }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ) {
+    count {
+      all: _all
+    }
+  }
+
+  playedWithAlina: aggregateMatch(
+    where: {
+      OR: [
+        {
+          AND: [
+            {
+              Team1: {
+                is: {
+                  OR: [
+                    { PlayerH1: { is: { playerId: { equals: $id } } } }
+                    { PlayerH2: { is: { playerId: { equals: $id } } } }
+                    { PlayerH3: { is: { playerId: { equals: $id } } } }
+                    { PlayerH4: { is: { playerId: { equals: $id } } } }
+                    { PlayerH5: { is: { playerId: { equals: $id } } } }
+                  ]
+                }
+              }
+            }
+            {
+              Team1: {
+                is: {
+                  OR: [
+                    { PlayerH1: { is: { playerId: { equals: 11 } } } }
+                    { PlayerH2: { is: { playerId: { equals: 11 } } } }
+                    { PlayerH3: { is: { playerId: { equals: 11 } } } }
+                    { PlayerH4: { is: { playerId: { equals: 11 } } } }
+                    { PlayerH5: { is: { playerId: { equals: 11 } } } }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+        {
+          AND: [
+            {
+              Team2: {
+                is: {
+                  OR: [
+                    { PlayerH1: { is: { playerId: { equals: $id } } } }
+                    { PlayerH2: { is: { playerId: { equals: $id } } } }
+                    { PlayerH3: { is: { playerId: { equals: $id } } } }
+                    { PlayerH4: { is: { playerId: { equals: $id } } } }
+                    { PlayerH5: { is: { playerId: { equals: $id } } } }
+                  ]
+                }
+              }
+            }
+            {
+              Team2: {
+                is: {
+                  OR: [
+                    { PlayerH1: { is: { playerId: { equals: 11 } } } }
+                    { PlayerH2: { is: { playerId: { equals: 11 } } } }
+                    { PlayerH3: { is: { playerId: { equals: 11 } } } }
+                    { PlayerH4: { is: { playerId: { equals: 11 } } } }
+                    { PlayerH5: { is: { playerId: { equals: 11 } } } }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ) {
+    count {
+      all: _all
+    }
+  }
+
+  lostWithAlina: aggregateMatch(
+    where: {
+      OR: [
+        {
+          AND: [
+            { matchResult: { equals: 2 } }
+            {
+              Team1: {
+                is: {
+                  OR: [
+                    { PlayerH1: { is: { playerId: { equals: $id } } } }
+                    { PlayerH2: { is: { playerId: { equals: $id } } } }
+                    { PlayerH3: { is: { playerId: { equals: $id } } } }
+                    { PlayerH4: { is: { playerId: { equals: $id } } } }
+                    { PlayerH5: { is: { playerId: { equals: $id } } } }
+                  ]
+                }
+              }
+            }
+            {
+              Team1: {
+                is: {
+                  OR: [
+                    { PlayerH1: { is: { playerId: { equals: 11 } } } }
+                    { PlayerH2: { is: { playerId: { equals: 11 } } } }
+                    { PlayerH3: { is: { playerId: { equals: 11 } } } }
+                    { PlayerH4: { is: { playerId: { equals: 11 } } } }
+                    { PlayerH5: { is: { playerId: { equals: 11 } } } }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+        {
+          AND: [
+            { matchResult: { equals: 1 } }
+            {
+              Team2: {
+                is: {
+                  OR: [
+                    { PlayerH1: { is: { playerId: { equals: $id } } } }
+                    { PlayerH2: { is: { playerId: { equals: $id } } } }
+                    { PlayerH3: { is: { playerId: { equals: $id } } } }
+                    { PlayerH4: { is: { playerId: { equals: $id } } } }
+                    { PlayerH5: { is: { playerId: { equals: $id } } } }
+                  ]
+                }
+              }
+            }
+            {
+              Team2: {
+                is: {
+                  OR: [
+                    { PlayerH1: { is: { playerId: { equals: 11 } } } }
+                    { PlayerH2: { is: { playerId: { equals: 11 } } } }
+                    { PlayerH3: { is: { playerId: { equals: 11 } } } }
+                    { PlayerH4: { is: { playerId: { equals: 11 } } } }
+                    { PlayerH5: { is: { playerId: { equals: 11 } } } }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ) {
+    count {
+      all: _all
+    }
+  }
+}

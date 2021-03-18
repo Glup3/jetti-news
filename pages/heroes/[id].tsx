@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import React from 'react';
+import AlinaStats from '../../components/Hero/AlinaStats/AlinaStats';
 import HeroRecentMatchesCard from '../../components/Hero/HeroRecentMatchesCard';
 import HeroTitle from '../../components/Hero/HeroTitle';
 import HeroWinrateCard from '../../components/Hero/HeroWinrateCard';
@@ -12,11 +13,17 @@ function Hero() {
 
   return (
     <div className="container my-2">
-      <HeroTitle userId={userId} />
       <div className="row">
         <div className="col-md mb-2">
-          <div>
-            <HeroWinrateCard userId={userId} />
+          <div className="row">
+            <HeroTitle userId={userId} />
+            <div>
+              <div className="mb-2">
+                <HeroWinrateCard userId={userId} />
+              </div>
+            </div>
+
+            <AlinaStats userId={userId} />
           </div>
         </div>
         <div className="col-md">

@@ -28,7 +28,7 @@ function HeroWinrateCard({ userId }: HeroWinrateCardProps) {
         <div className="col">
           <RankIcon skillLevel={data.player?.skillLevel} size={100} />
         </div>
-        <div className="col">
+        <div className="col ms-4">
           <div>{total} Games</div>
           <div>{data.gamesWon.count.all} Wins</div>
           <div>{data.gamesLost.count.all} Loss</div>

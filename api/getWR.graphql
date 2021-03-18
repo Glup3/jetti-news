@@ -3,11 +3,11 @@ query GetWR($id: Int!) {
     where: {
       OR: [
         {
-          Team1: {
-            is: {
-              AND: [
-                { Match1: { every: { matchResult: { equals: 1 } } } }
-                {
+          AND: [
+            { matchResult: { equals: 1 } }
+            {
+              Team1: {
+                is: {
                   OR: [
                     { PlayerH1: { is: { playerId: { equals: $id } } } }
                     { PlayerH2: { is: { playerId: { equals: $id } } } }
@@ -16,16 +16,16 @@ query GetWR($id: Int!) {
                     { PlayerH5: { is: { playerId: { equals: $id } } } }
                   ]
                 }
-              ]
+              }
             }
-          }
+          ]
         }
         {
-          Team2: {
-            is: {
-              AND: [
-                { Match2: { every: { matchResult: { equals: 2 } } } }
-                {
+          AND: [
+            { matchResult: { equals: 2 } }
+            {
+              Team2: {
+                is: {
                   OR: [
                     { PlayerH1: { is: { playerId: { equals: $id } } } }
                     { PlayerH2: { is: { playerId: { equals: $id } } } }
@@ -34,9 +34,9 @@ query GetWR($id: Int!) {
                     { PlayerH5: { is: { playerId: { equals: $id } } } }
                   ]
                 }
-              ]
+              }
             }
-          }
+          ]
         }
       ]
     }
@@ -45,15 +45,16 @@ query GetWR($id: Int!) {
       all: _all
     }
   }
+
   gamesLost: aggregateMatch(
     where: {
       OR: [
         {
-          Team1: {
-            is: {
-              AND: [
-                { Match1: { every: { matchResult: { equals: 2 } } } }
-                {
+          AND: [
+            { matchResult: { equals: 2 } }
+            {
+              Team1: {
+                is: {
                   OR: [
                     { PlayerH1: { is: { playerId: { equals: $id } } } }
                     { PlayerH2: { is: { playerId: { equals: $id } } } }
@@ -62,16 +63,16 @@ query GetWR($id: Int!) {
                     { PlayerH5: { is: { playerId: { equals: $id } } } }
                   ]
                 }
-              ]
+              }
             }
-          }
+          ]
         }
         {
-          Team2: {
-            is: {
-              AND: [
-                { Match2: { every: { matchResult: { equals: 1 } } } }
-                {
+          AND: [
+            { matchResult: { equals: 1 } }
+            {
+              Team2: {
+                is: {
                   OR: [
                     { PlayerH1: { is: { playerId: { equals: $id } } } }
                     { PlayerH2: { is: { playerId: { equals: $id } } } }
@@ -80,9 +81,9 @@ query GetWR($id: Int!) {
                     { PlayerH5: { is: { playerId: { equals: $id } } } }
                   ]
                 }
-              ]
+              }
             }
-          }
+          ]
         }
       ]
     }
@@ -91,7 +92,9 @@ query GetWR($id: Int!) {
       all: _all
     }
   }
+
   player: findUniquePlayers(where: { id: $id }) {
     skillLevel
+    createdAt
   }
 }

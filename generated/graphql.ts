@@ -557,6 +557,34 @@ export enum TeamScalarFieldEnum {
   UpdatedAt = 'updatedAt'
 }
 
+export type GetAlinaStatsQueryVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type GetAlinaStatsQuery = (
+  { __typename?: 'Query' }
+  & { lostAgainstAlina: (
+    { __typename?: 'AggregateMatch' }
+    & { count?: Maybe<(
+      { __typename?: 'MatchCountAggregate' }
+      & { all: MatchCountAggregate['_all'] }
+    )> }
+  ), playedWithAlina: (
+    { __typename?: 'AggregateMatch' }
+    & { count?: Maybe<(
+      { __typename?: 'MatchCountAggregate' }
+      & { all: MatchCountAggregate['_all'] }
+    )> }
+  ), lostWithAlina: (
+    { __typename?: 'AggregateMatch' }
+    & { count?: Maybe<(
+      { __typename?: 'MatchCountAggregate' }
+      & { all: MatchCountAggregate['_all'] }
+    )> }
+  ) }
+);
+
 export type GetAllPlayersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -721,11 +749,64 @@ export type GetWrQuery = (
     )> }
   ), player?: Maybe<(
     { __typename?: 'Players' }
-    & Pick<Players, 'skillLevel'>
+    & Pick<Players, 'skillLevel' | 'createdAt'>
   )> }
 );
 
 
+export const GetAlinaStatsDocument = gql`
+    query GetAlinaStats($id: Int!) {
+  lostAgainstAlina: aggregateMatch(
+    where: {OR: [{AND: [{matchResult: {equals: 2}}, {Team1: {is: {OR: [{PlayerH1: {is: {playerId: {equals: $id}}}}, {PlayerH2: {is: {playerId: {equals: $id}}}}, {PlayerH3: {is: {playerId: {equals: $id}}}}, {PlayerH4: {is: {playerId: {equals: $id}}}}, {PlayerH5: {is: {playerId: {equals: $id}}}}]}}}, {Team2: {is: {OR: [{PlayerH1: {is: {playerId: {equals: 11}}}}, {PlayerH2: {is: {playerId: {equals: 11}}}}, {PlayerH3: {is: {playerId: {equals: 11}}}}, {PlayerH4: {is: {playerId: {equals: 11}}}}, {PlayerH5: {is: {playerId: {equals: 11}}}}]}}}]}, {AND: [{matchResult: {equals: 1}}, {Team2: {is: {OR: [{PlayerH1: {is: {playerId: {equals: $id}}}}, {PlayerH2: {is: {playerId: {equals: $id}}}}, {PlayerH3: {is: {playerId: {equals: $id}}}}, {PlayerH4: {is: {playerId: {equals: $id}}}}, {PlayerH5: {is: {playerId: {equals: $id}}}}]}}}, {Team1: {is: {OR: [{PlayerH1: {is: {playerId: {equals: 11}}}}, {PlayerH2: {is: {playerId: {equals: 11}}}}, {PlayerH3: {is: {playerId: {equals: 11}}}}, {PlayerH4: {is: {playerId: {equals: 11}}}}, {PlayerH5: {is: {playerId: {equals: 11}}}}]}}}]}]}
+  ) {
+    count {
+      all: _all
+    }
+  }
+  playedWithAlina: aggregateMatch(
+    where: {OR: [{AND: [{Team1: {is: {OR: [{PlayerH1: {is: {playerId: {equals: $id}}}}, {PlayerH2: {is: {playerId: {equals: $id}}}}, {PlayerH3: {is: {playerId: {equals: $id}}}}, {PlayerH4: {is: {playerId: {equals: $id}}}}, {PlayerH5: {is: {playerId: {equals: $id}}}}]}}}, {Team1: {is: {OR: [{PlayerH1: {is: {playerId: {equals: 11}}}}, {PlayerH2: {is: {playerId: {equals: 11}}}}, {PlayerH3: {is: {playerId: {equals: 11}}}}, {PlayerH4: {is: {playerId: {equals: 11}}}}, {PlayerH5: {is: {playerId: {equals: 11}}}}]}}}]}, {AND: [{Team2: {is: {OR: [{PlayerH1: {is: {playerId: {equals: $id}}}}, {PlayerH2: {is: {playerId: {equals: $id}}}}, {PlayerH3: {is: {playerId: {equals: $id}}}}, {PlayerH4: {is: {playerId: {equals: $id}}}}, {PlayerH5: {is: {playerId: {equals: $id}}}}]}}}, {Team2: {is: {OR: [{PlayerH1: {is: {playerId: {equals: 11}}}}, {PlayerH2: {is: {playerId: {equals: 11}}}}, {PlayerH3: {is: {playerId: {equals: 11}}}}, {PlayerH4: {is: {playerId: {equals: 11}}}}, {PlayerH5: {is: {playerId: {equals: 11}}}}]}}}]}]}
+  ) {
+    count {
+      all: _all
+    }
+  }
+  lostWithAlina: aggregateMatch(
+    where: {OR: [{AND: [{matchResult: {equals: 2}}, {Team1: {is: {OR: [{PlayerH1: {is: {playerId: {equals: $id}}}}, {PlayerH2: {is: {playerId: {equals: $id}}}}, {PlayerH3: {is: {playerId: {equals: $id}}}}, {PlayerH4: {is: {playerId: {equals: $id}}}}, {PlayerH5: {is: {playerId: {equals: $id}}}}]}}}, {Team1: {is: {OR: [{PlayerH1: {is: {playerId: {equals: 11}}}}, {PlayerH2: {is: {playerId: {equals: 11}}}}, {PlayerH3: {is: {playerId: {equals: 11}}}}, {PlayerH4: {is: {playerId: {equals: 11}}}}, {PlayerH5: {is: {playerId: {equals: 11}}}}]}}}]}, {AND: [{matchResult: {equals: 1}}, {Team2: {is: {OR: [{PlayerH1: {is: {playerId: {equals: $id}}}}, {PlayerH2: {is: {playerId: {equals: $id}}}}, {PlayerH3: {is: {playerId: {equals: $id}}}}, {PlayerH4: {is: {playerId: {equals: $id}}}}, {PlayerH5: {is: {playerId: {equals: $id}}}}]}}}, {Team2: {is: {OR: [{PlayerH1: {is: {playerId: {equals: 11}}}}, {PlayerH2: {is: {playerId: {equals: 11}}}}, {PlayerH3: {is: {playerId: {equals: 11}}}}, {PlayerH4: {is: {playerId: {equals: 11}}}}, {PlayerH5: {is: {playerId: {equals: 11}}}}]}}}]}]}
+  ) {
+    count {
+      all: _all
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetAlinaStatsQuery__
+ *
+ * To run a query within a React component, call `useGetAlinaStatsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAlinaStatsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAlinaStatsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetAlinaStatsQuery(baseOptions: Apollo.QueryHookOptions<GetAlinaStatsQuery, GetAlinaStatsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAlinaStatsQuery, GetAlinaStatsQueryVariables>(GetAlinaStatsDocument, options);
+      }
+export function useGetAlinaStatsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAlinaStatsQuery, GetAlinaStatsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAlinaStatsQuery, GetAlinaStatsQueryVariables>(GetAlinaStatsDocument, options);
+        }
+export type GetAlinaStatsQueryHookResult = ReturnType<typeof useGetAlinaStatsQuery>;
+export type GetAlinaStatsLazyQueryHookResult = ReturnType<typeof useGetAlinaStatsLazyQuery>;
+export type GetAlinaStatsQueryResult = Apollo.QueryResult<GetAlinaStatsQuery, GetAlinaStatsQueryVariables>;
 export const GetAllPlayersDocument = gql`
     query GetAllPlayers {
   findManyPlayers(orderBy: {skillLevel: desc}) {
@@ -990,14 +1071,14 @@ export type GetRecentAndWonMatchesFromPlayerQueryResult = Apollo.QueryResult<Get
 export const GetWrDocument = gql`
     query GetWR($id: Int!) {
   gamesWon: aggregateMatch(
-    where: {OR: [{Team1: {is: {AND: [{Match1: {every: {matchResult: {equals: 1}}}}, {OR: [{PlayerH1: {is: {playerId: {equals: $id}}}}, {PlayerH2: {is: {playerId: {equals: $id}}}}, {PlayerH3: {is: {playerId: {equals: $id}}}}, {PlayerH4: {is: {playerId: {equals: $id}}}}, {PlayerH5: {is: {playerId: {equals: $id}}}}]}]}}}, {Team2: {is: {AND: [{Match2: {every: {matchResult: {equals: 2}}}}, {OR: [{PlayerH1: {is: {playerId: {equals: $id}}}}, {PlayerH2: {is: {playerId: {equals: $id}}}}, {PlayerH3: {is: {playerId: {equals: $id}}}}, {PlayerH4: {is: {playerId: {equals: $id}}}}, {PlayerH5: {is: {playerId: {equals: $id}}}}]}]}}}]}
+    where: {OR: [{AND: [{matchResult: {equals: 1}}, {Team1: {is: {OR: [{PlayerH1: {is: {playerId: {equals: $id}}}}, {PlayerH2: {is: {playerId: {equals: $id}}}}, {PlayerH3: {is: {playerId: {equals: $id}}}}, {PlayerH4: {is: {playerId: {equals: $id}}}}, {PlayerH5: {is: {playerId: {equals: $id}}}}]}}}]}, {AND: [{matchResult: {equals: 2}}, {Team2: {is: {OR: [{PlayerH1: {is: {playerId: {equals: $id}}}}, {PlayerH2: {is: {playerId: {equals: $id}}}}, {PlayerH3: {is: {playerId: {equals: $id}}}}, {PlayerH4: {is: {playerId: {equals: $id}}}}, {PlayerH5: {is: {playerId: {equals: $id}}}}]}}}]}]}
   ) {
     count {
       all: _all
     }
   }
   gamesLost: aggregateMatch(
-    where: {OR: [{Team1: {is: {AND: [{Match1: {every: {matchResult: {equals: 2}}}}, {OR: [{PlayerH1: {is: {playerId: {equals: $id}}}}, {PlayerH2: {is: {playerId: {equals: $id}}}}, {PlayerH3: {is: {playerId: {equals: $id}}}}, {PlayerH4: {is: {playerId: {equals: $id}}}}, {PlayerH5: {is: {playerId: {equals: $id}}}}]}]}}}, {Team2: {is: {AND: [{Match2: {every: {matchResult: {equals: 1}}}}, {OR: [{PlayerH1: {is: {playerId: {equals: $id}}}}, {PlayerH2: {is: {playerId: {equals: $id}}}}, {PlayerH3: {is: {playerId: {equals: $id}}}}, {PlayerH4: {is: {playerId: {equals: $id}}}}, {PlayerH5: {is: {playerId: {equals: $id}}}}]}]}}}]}
+    where: {OR: [{AND: [{matchResult: {equals: 2}}, {Team1: {is: {OR: [{PlayerH1: {is: {playerId: {equals: $id}}}}, {PlayerH2: {is: {playerId: {equals: $id}}}}, {PlayerH3: {is: {playerId: {equals: $id}}}}, {PlayerH4: {is: {playerId: {equals: $id}}}}, {PlayerH5: {is: {playerId: {equals: $id}}}}]}}}]}, {AND: [{matchResult: {equals: 1}}, {Team2: {is: {OR: [{PlayerH1: {is: {playerId: {equals: $id}}}}, {PlayerH2: {is: {playerId: {equals: $id}}}}, {PlayerH3: {is: {playerId: {equals: $id}}}}, {PlayerH4: {is: {playerId: {equals: $id}}}}, {PlayerH5: {is: {playerId: {equals: $id}}}}]}}}]}]}
   ) {
     count {
       all: _all
@@ -1005,6 +1086,7 @@ export const GetWrDocument = gql`
   }
   player: findUniquePlayers(where: {id: $id}) {
     skillLevel
+    createdAt
   }
 }
     `;

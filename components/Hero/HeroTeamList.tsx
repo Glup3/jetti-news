@@ -1,5 +1,4 @@
 import React from 'react';
-import classNames from 'classnames';
 
 import { GetRecentAndWonMatchesFromPlayerQuery } from '../../generated/graphql';
 import HeroTeamListPlayer from './HeroTeamListPlayer';
@@ -13,7 +12,7 @@ function HeroTeamList({ team, username }: TeamListProps) {
   return (
     <div className="col-sm">
       <div>
-        <h2 className={classNames('d-inline-block')}>Team {team.teamName}</h2>
+        <h4 className="d-inline-block">Team {team.teamName}</h4>
       </div>
       <div className="text-medium">
         <HeroTeamListPlayer
