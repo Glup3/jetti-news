@@ -21,6 +21,8 @@ export type Query = {
   match?: Maybe<Match>;
   matches: Array<Match>;
   aggregateMatch: AggregateMatch;
+  playerH?: Maybe<PlayerH>;
+  playerHS: Array<PlayerH>;
   findUniquePlayers?: Maybe<Players>;
   findManyPlayers: Array<Players>;
   team?: Maybe<Team>;
@@ -49,6 +51,21 @@ export type QueryAggregateMatchArgs = {
   cursor?: Maybe<MatchWhereUniqueInput>;
   take?: Maybe<Scalars['Int']>;
   skip?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryPlayerHArgs = {
+  where: PlayerHWhereUniqueInput;
+};
+
+
+export type QueryPlayerHsArgs = {
+  where?: Maybe<PlayerHWhereInput>;
+  orderBy?: Maybe<Array<PlayerHOrderByInput>>;
+  cursor?: Maybe<PlayerHWhereUniqueInput>;
+  take?: Maybe<Scalars['Int']>;
+  skip?: Maybe<Scalars['Int']>;
+  distinct?: Maybe<Array<PlayerHScalarFieldEnum>>;
 };
 
 
@@ -143,21 +160,101 @@ export type PlayerH = {
   userTag?: Maybe<Scalars['String']>;
   createdAt: Scalars['DateTime'];
   updatedAt: Scalars['DateTime'];
+  Players?: Maybe<Players>;
+  Team1: Array<Team>;
+  Team2: Array<Team>;
+  Team3: Array<Team>;
+  Team4: Array<Team>;
+  Team5: Array<Team>;
 };
 
-export type MatchWhereInput = {
-  AND?: Maybe<Array<MatchWhereInput>>;
-  OR?: Maybe<Array<MatchWhereInput>>;
-  NOT?: Maybe<Array<MatchWhereInput>>;
+
+export type PlayerHTeam1Args = {
+  where?: Maybe<TeamWhereInput>;
+  orderBy?: Maybe<Array<TeamOrderByInput>>;
+  cursor?: Maybe<TeamWhereUniqueInput>;
+  take?: Maybe<Scalars['Int']>;
+  skip?: Maybe<Scalars['Int']>;
+  distinct?: Maybe<Array<TeamScalarFieldEnum>>;
+};
+
+
+export type PlayerHTeam2Args = {
+  where?: Maybe<TeamWhereInput>;
+  orderBy?: Maybe<Array<TeamOrderByInput>>;
+  cursor?: Maybe<TeamWhereUniqueInput>;
+  take?: Maybe<Scalars['Int']>;
+  skip?: Maybe<Scalars['Int']>;
+  distinct?: Maybe<Array<TeamScalarFieldEnum>>;
+};
+
+
+export type PlayerHTeam3Args = {
+  where?: Maybe<TeamWhereInput>;
+  orderBy?: Maybe<Array<TeamOrderByInput>>;
+  cursor?: Maybe<TeamWhereUniqueInput>;
+  take?: Maybe<Scalars['Int']>;
+  skip?: Maybe<Scalars['Int']>;
+  distinct?: Maybe<Array<TeamScalarFieldEnum>>;
+};
+
+
+export type PlayerHTeam4Args = {
+  where?: Maybe<TeamWhereInput>;
+  orderBy?: Maybe<Array<TeamOrderByInput>>;
+  cursor?: Maybe<TeamWhereUniqueInput>;
+  take?: Maybe<Scalars['Int']>;
+  skip?: Maybe<Scalars['Int']>;
+  distinct?: Maybe<Array<TeamScalarFieldEnum>>;
+};
+
+
+export type PlayerHTeam5Args = {
+  where?: Maybe<TeamWhereInput>;
+  orderBy?: Maybe<Array<TeamOrderByInput>>;
+  cursor?: Maybe<TeamWhereUniqueInput>;
+  take?: Maybe<Scalars['Int']>;
+  skip?: Maybe<Scalars['Int']>;
+  distinct?: Maybe<Array<TeamScalarFieldEnum>>;
+};
+
+export type Players = {
+  __typename?: 'Players';
+  id: Scalars['Int'];
+  userId?: Maybe<Scalars['String']>;
+  skillLevel?: Maybe<Scalars['Float']>;
+  userTag?: Maybe<Scalars['String']>;
+  createdAt: Scalars['DateTime'];
+  updatedAt: Scalars['DateTime'];
+  PlayerH: Array<PlayerH>;
+};
+
+
+export type PlayersPlayerHArgs = {
+  where?: Maybe<PlayerHWhereInput>;
+  orderBy?: Maybe<Array<PlayerHOrderByInput>>;
+  cursor?: Maybe<PlayerHWhereUniqueInput>;
+  take?: Maybe<Scalars['Int']>;
+  skip?: Maybe<Scalars['Int']>;
+  distinct?: Maybe<Array<PlayerHScalarFieldEnum>>;
+};
+
+export type PlayerHWhereInput = {
+  AND?: Maybe<Array<PlayerHWhereInput>>;
+  OR?: Maybe<Array<PlayerHWhereInput>>;
+  NOT?: Maybe<Array<PlayerHWhereInput>>;
   id?: Maybe<IntFilter>;
-  matchResult?: Maybe<IntNullableFilter>;
-  screenshotPath?: Maybe<StringNullableFilter>;
-  teamId1?: Maybe<IntNullableFilter>;
-  teamId2?: Maybe<IntNullableFilter>;
+  playerId?: Maybe<IntNullableFilter>;
+  skillLevel?: Maybe<FloatNullableFilter>;
+  userTag?: Maybe<StringNullableFilter>;
   createdAt?: Maybe<DateTimeFilter>;
   updatedAt?: Maybe<DateTimeFilter>;
-  Team1?: Maybe<TeamRelationFilter>;
-  Team2?: Maybe<TeamRelationFilter>;
+  Players?: Maybe<PlayersRelationFilter>;
+  Team1?: Maybe<TeamListRelationFilter>;
+  Team2?: Maybe<TeamListRelationFilter>;
+  Team3?: Maybe<TeamListRelationFilter>;
+  Team4?: Maybe<TeamListRelationFilter>;
+  Team5?: Maybe<TeamListRelationFilter>;
 };
 
 export type IntFilter = {
@@ -202,6 +299,28 @@ export type NestedIntNullableFilter = {
   gt?: Maybe<Scalars['Int']>;
   gte?: Maybe<Scalars['Int']>;
   not?: Maybe<NestedIntNullableFilter>;
+};
+
+export type FloatNullableFilter = {
+  equals?: Maybe<Scalars['Float']>;
+  in?: Maybe<Array<Scalars['Float']>>;
+  notIn?: Maybe<Array<Scalars['Float']>>;
+  lt?: Maybe<Scalars['Float']>;
+  lte?: Maybe<Scalars['Float']>;
+  gt?: Maybe<Scalars['Float']>;
+  gte?: Maybe<Scalars['Float']>;
+  not?: Maybe<NestedFloatNullableFilter>;
+};
+
+export type NestedFloatNullableFilter = {
+  equals?: Maybe<Scalars['Float']>;
+  in?: Maybe<Array<Scalars['Float']>>;
+  notIn?: Maybe<Array<Scalars['Float']>>;
+  lt?: Maybe<Scalars['Float']>;
+  lte?: Maybe<Scalars['Float']>;
+  gt?: Maybe<Scalars['Float']>;
+  gte?: Maybe<Scalars['Float']>;
+  not?: Maybe<NestedFloatNullableFilter>;
 };
 
 export type StringNullableFilter = {
@@ -260,78 +379,6 @@ export type NestedDateTimeFilter = {
   not?: Maybe<NestedDateTimeFilter>;
 };
 
-export type TeamRelationFilter = {
-  is?: Maybe<TeamWhereInput>;
-  isNot?: Maybe<TeamWhereInput>;
-};
-
-export type TeamWhereInput = {
-  AND?: Maybe<Array<TeamWhereInput>>;
-  OR?: Maybe<Array<TeamWhereInput>>;
-  NOT?: Maybe<Array<TeamWhereInput>>;
-  id?: Maybe<IntFilter>;
-  teamName?: Maybe<StringNullableFilter>;
-  playerId1?: Maybe<IntNullableFilter>;
-  playerId2?: Maybe<IntNullableFilter>;
-  playerId3?: Maybe<IntNullableFilter>;
-  playerId4?: Maybe<IntNullableFilter>;
-  playerId5?: Maybe<IntNullableFilter>;
-  createdAt?: Maybe<DateTimeFilter>;
-  updatedAt?: Maybe<DateTimeFilter>;
-  PlayerH1?: Maybe<PlayerHRelationFilter>;
-  PlayerH2?: Maybe<PlayerHRelationFilter>;
-  PlayerH3?: Maybe<PlayerHRelationFilter>;
-  PlayerH4?: Maybe<PlayerHRelationFilter>;
-  PlayerH5?: Maybe<PlayerHRelationFilter>;
-  Match1?: Maybe<MatchListRelationFilter>;
-  Match2?: Maybe<MatchListRelationFilter>;
-};
-
-export type PlayerHRelationFilter = {
-  is?: Maybe<PlayerHWhereInput>;
-  isNot?: Maybe<PlayerHWhereInput>;
-};
-
-export type PlayerHWhereInput = {
-  AND?: Maybe<Array<PlayerHWhereInput>>;
-  OR?: Maybe<Array<PlayerHWhereInput>>;
-  NOT?: Maybe<Array<PlayerHWhereInput>>;
-  id?: Maybe<IntFilter>;
-  playerId?: Maybe<IntNullableFilter>;
-  skillLevel?: Maybe<FloatNullableFilter>;
-  userTag?: Maybe<StringNullableFilter>;
-  createdAt?: Maybe<DateTimeFilter>;
-  updatedAt?: Maybe<DateTimeFilter>;
-  Players?: Maybe<PlayersRelationFilter>;
-  Team1?: Maybe<TeamListRelationFilter>;
-  Team2?: Maybe<TeamListRelationFilter>;
-  Team3?: Maybe<TeamListRelationFilter>;
-  Team4?: Maybe<TeamListRelationFilter>;
-  Team5?: Maybe<TeamListRelationFilter>;
-};
-
-export type FloatNullableFilter = {
-  equals?: Maybe<Scalars['Float']>;
-  in?: Maybe<Array<Scalars['Float']>>;
-  notIn?: Maybe<Array<Scalars['Float']>>;
-  lt?: Maybe<Scalars['Float']>;
-  lte?: Maybe<Scalars['Float']>;
-  gt?: Maybe<Scalars['Float']>;
-  gte?: Maybe<Scalars['Float']>;
-  not?: Maybe<NestedFloatNullableFilter>;
-};
-
-export type NestedFloatNullableFilter = {
-  equals?: Maybe<Scalars['Float']>;
-  in?: Maybe<Array<Scalars['Float']>>;
-  notIn?: Maybe<Array<Scalars['Float']>>;
-  lt?: Maybe<Scalars['Float']>;
-  lte?: Maybe<Scalars['Float']>;
-  gt?: Maybe<Scalars['Float']>;
-  gte?: Maybe<Scalars['Float']>;
-  not?: Maybe<NestedFloatNullableFilter>;
-};
-
 export type PlayersRelationFilter = {
   is?: Maybe<PlayersWhereInput>;
   isNot?: Maybe<PlayersWhereInput>;
@@ -362,27 +409,94 @@ export type TeamListRelationFilter = {
   none?: Maybe<TeamWhereInput>;
 };
 
+export type TeamWhereInput = {
+  AND?: Maybe<Array<TeamWhereInput>>;
+  OR?: Maybe<Array<TeamWhereInput>>;
+  NOT?: Maybe<Array<TeamWhereInput>>;
+  id?: Maybe<IntFilter>;
+  teamName?: Maybe<StringNullableFilter>;
+  playerId1?: Maybe<IntNullableFilter>;
+  playerId2?: Maybe<IntNullableFilter>;
+  playerId3?: Maybe<IntNullableFilter>;
+  playerId4?: Maybe<IntNullableFilter>;
+  playerId5?: Maybe<IntNullableFilter>;
+  createdAt?: Maybe<DateTimeFilter>;
+  updatedAt?: Maybe<DateTimeFilter>;
+  PlayerH1?: Maybe<PlayerHRelationFilter>;
+  PlayerH2?: Maybe<PlayerHRelationFilter>;
+  PlayerH3?: Maybe<PlayerHRelationFilter>;
+  PlayerH4?: Maybe<PlayerHRelationFilter>;
+  PlayerH5?: Maybe<PlayerHRelationFilter>;
+  Match1?: Maybe<MatchListRelationFilter>;
+  Match2?: Maybe<MatchListRelationFilter>;
+};
+
+export type PlayerHRelationFilter = {
+  is?: Maybe<PlayerHWhereInput>;
+  isNot?: Maybe<PlayerHWhereInput>;
+};
+
 export type MatchListRelationFilter = {
   every?: Maybe<MatchWhereInput>;
   some?: Maybe<MatchWhereInput>;
   none?: Maybe<MatchWhereInput>;
 };
 
-export type MatchOrderByInput = {
+export type MatchWhereInput = {
+  AND?: Maybe<Array<MatchWhereInput>>;
+  OR?: Maybe<Array<MatchWhereInput>>;
+  NOT?: Maybe<Array<MatchWhereInput>>;
+  id?: Maybe<IntFilter>;
+  matchResult?: Maybe<IntNullableFilter>;
+  screenshotPath?: Maybe<StringNullableFilter>;
+  teamId1?: Maybe<IntNullableFilter>;
+  teamId2?: Maybe<IntNullableFilter>;
+  createdAt?: Maybe<DateTimeFilter>;
+  updatedAt?: Maybe<DateTimeFilter>;
+  Team1?: Maybe<TeamRelationFilter>;
+  Team2?: Maybe<TeamRelationFilter>;
+};
+
+export type TeamRelationFilter = {
+  is?: Maybe<TeamWhereInput>;
+  isNot?: Maybe<TeamWhereInput>;
+};
+
+export type PlayerHOrderByInput = {
   id?: Maybe<SortOrder>;
-  matchResult?: Maybe<SortOrder>;
-  screenshotPath?: Maybe<SortOrder>;
-  teamId1?: Maybe<SortOrder>;
-  teamId2?: Maybe<SortOrder>;
+  playerId?: Maybe<SortOrder>;
+  skillLevel?: Maybe<SortOrder>;
+  userTag?: Maybe<SortOrder>;
   createdAt?: Maybe<SortOrder>;
   updatedAt?: Maybe<SortOrder>;
-  Team1?: Maybe<TeamOrderByInput>;
-  Team2?: Maybe<TeamOrderByInput>;
+  Players?: Maybe<PlayersOrderByInput>;
 };
 
 export enum SortOrder {
   Asc = 'asc',
   Desc = 'desc'
+}
+
+export type PlayersOrderByInput = {
+  id?: Maybe<SortOrder>;
+  userId?: Maybe<SortOrder>;
+  skillLevel?: Maybe<SortOrder>;
+  userTag?: Maybe<SortOrder>;
+  createdAt?: Maybe<SortOrder>;
+  updatedAt?: Maybe<SortOrder>;
+};
+
+export type PlayerHWhereUniqueInput = {
+  id?: Maybe<Scalars['Int']>;
+};
+
+export enum PlayerHScalarFieldEnum {
+  Id = 'id',
+  PlayerId = 'playerId',
+  SkillLevel = 'skillLevel',
+  UserTag = 'userTag',
+  CreatedAt = 'createdAt',
+  UpdatedAt = 'updatedAt'
 }
 
 export type TeamOrderByInput = {
@@ -402,23 +516,32 @@ export type TeamOrderByInput = {
   PlayerH5?: Maybe<PlayerHOrderByInput>;
 };
 
-export type PlayerHOrderByInput = {
-  id?: Maybe<SortOrder>;
-  playerId?: Maybe<SortOrder>;
-  skillLevel?: Maybe<SortOrder>;
-  userTag?: Maybe<SortOrder>;
-  createdAt?: Maybe<SortOrder>;
-  updatedAt?: Maybe<SortOrder>;
-  Players?: Maybe<PlayersOrderByInput>;
+export type TeamWhereUniqueInput = {
+  id?: Maybe<Scalars['Int']>;
 };
 
-export type PlayersOrderByInput = {
+export enum TeamScalarFieldEnum {
+  Id = 'id',
+  TeamName = 'teamName',
+  PlayerId1 = 'playerId1',
+  PlayerId2 = 'playerId2',
+  PlayerId3 = 'playerId3',
+  PlayerId4 = 'playerId4',
+  PlayerId5 = 'playerId5',
+  CreatedAt = 'createdAt',
+  UpdatedAt = 'updatedAt'
+}
+
+export type MatchOrderByInput = {
   id?: Maybe<SortOrder>;
-  userId?: Maybe<SortOrder>;
-  skillLevel?: Maybe<SortOrder>;
-  userTag?: Maybe<SortOrder>;
+  matchResult?: Maybe<SortOrder>;
+  screenshotPath?: Maybe<SortOrder>;
+  teamId1?: Maybe<SortOrder>;
+  teamId2?: Maybe<SortOrder>;
   createdAt?: Maybe<SortOrder>;
   updatedAt?: Maybe<SortOrder>;
+  Team1?: Maybe<TeamOrderByInput>;
+  Team2?: Maybe<TeamOrderByInput>;
 };
 
 export type MatchWhereUniqueInput = {
@@ -494,40 +617,6 @@ export type MatchMaxAggregate = {
   updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
-export type Players = {
-  __typename?: 'Players';
-  id: Scalars['Int'];
-  userId?: Maybe<Scalars['String']>;
-  skillLevel?: Maybe<Scalars['Float']>;
-  userTag?: Maybe<Scalars['String']>;
-  createdAt: Scalars['DateTime'];
-  updatedAt: Scalars['DateTime'];
-  PlayerH: Array<PlayerH>;
-};
-
-
-export type PlayersPlayerHArgs = {
-  where?: Maybe<PlayerHWhereInput>;
-  orderBy?: Maybe<Array<PlayerHOrderByInput>>;
-  cursor?: Maybe<PlayerHWhereUniqueInput>;
-  take?: Maybe<Scalars['Int']>;
-  skip?: Maybe<Scalars['Int']>;
-  distinct?: Maybe<Array<PlayerHScalarFieldEnum>>;
-};
-
-export type PlayerHWhereUniqueInput = {
-  id?: Maybe<Scalars['Int']>;
-};
-
-export enum PlayerHScalarFieldEnum {
-  Id = 'id',
-  PlayerId = 'playerId',
-  SkillLevel = 'skillLevel',
-  UserTag = 'userTag',
-  CreatedAt = 'createdAt',
-  UpdatedAt = 'updatedAt'
-}
-
 export type PlayersWhereUniqueInput = {
   id?: Maybe<Scalars['Int']>;
 };
@@ -537,22 +626,6 @@ export enum PlayersScalarFieldEnum {
   UserId = 'userId',
   SkillLevel = 'skillLevel',
   UserTag = 'userTag',
-  CreatedAt = 'createdAt',
-  UpdatedAt = 'updatedAt'
-}
-
-export type TeamWhereUniqueInput = {
-  id?: Maybe<Scalars['Int']>;
-};
-
-export enum TeamScalarFieldEnum {
-  Id = 'id',
-  TeamName = 'teamName',
-  PlayerId1 = 'playerId1',
-  PlayerId2 = 'playerId2',
-  PlayerId3 = 'playerId3',
-  PlayerId4 = 'playerId4',
-  PlayerId5 = 'playerId5',
   CreatedAt = 'createdAt',
   UpdatedAt = 'updatedAt'
 }
@@ -665,7 +738,7 @@ export type GetPlayerQuery = (
   { __typename?: 'Query' }
   & { player?: Maybe<(
     { __typename?: 'Players' }
-    & Pick<Players, 'userTag'>
+    & Pick<Players, 'id' | 'userTag'>
   )> }
 );
 
@@ -728,6 +801,22 @@ export type GetRecentAndWonMatchesFromPlayerQuery = (
   )> }
 );
 
+export type GetSkillLevelTimelineQueryVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type GetSkillLevelTimelineQuery = (
+  { __typename?: 'Query' }
+  & { players: Array<(
+    { __typename?: 'PlayerH' }
+    & Pick<PlayerH, 'id' | 'createdAt' | 'skillLevel'>
+  )>, currentPlayer?: Maybe<(
+    { __typename?: 'Players' }
+    & Pick<Players, 'id' | 'skillLevel'>
+  )> }
+);
+
 export type GetWrQueryVariables = Exact<{
   id: Scalars['Int'];
 }>;
@@ -749,7 +838,7 @@ export type GetWrQuery = (
     )> }
   ), player?: Maybe<(
     { __typename?: 'Players' }
-    & Pick<Players, 'skillLevel' | 'createdAt'>
+    & Pick<Players, 'id' | 'skillLevel' | 'createdAt'>
   )> }
 );
 
@@ -938,6 +1027,7 @@ export type GetMatchesQueryResult = Apollo.QueryResult<GetMatchesQuery, GetMatch
 export const GetPlayerDocument = gql`
     query GetPlayer($id: Int!) {
   player: findUniquePlayers(where: {id: $id}) {
+    id
     userTag
   }
 }
@@ -1068,6 +1158,51 @@ export function useGetRecentAndWonMatchesFromPlayerLazyQuery(baseOptions?: Apoll
 export type GetRecentAndWonMatchesFromPlayerQueryHookResult = ReturnType<typeof useGetRecentAndWonMatchesFromPlayerQuery>;
 export type GetRecentAndWonMatchesFromPlayerLazyQueryHookResult = ReturnType<typeof useGetRecentAndWonMatchesFromPlayerLazyQuery>;
 export type GetRecentAndWonMatchesFromPlayerQueryResult = Apollo.QueryResult<GetRecentAndWonMatchesFromPlayerQuery, GetRecentAndWonMatchesFromPlayerQueryVariables>;
+export const GetSkillLevelTimelineDocument = gql`
+    query GetSkillLevelTimeline($id: Int!) {
+  players: playerHS(
+    take: 9
+    orderBy: {createdAt: desc}
+    where: {playerId: {equals: $id}}
+  ) {
+    id
+    createdAt
+    skillLevel
+  }
+  currentPlayer: findUniquePlayers(where: {id: $id}) {
+    id
+    skillLevel
+  }
+}
+    `;
+
+/**
+ * __useGetSkillLevelTimelineQuery__
+ *
+ * To run a query within a React component, call `useGetSkillLevelTimelineQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSkillLevelTimelineQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSkillLevelTimelineQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetSkillLevelTimelineQuery(baseOptions: Apollo.QueryHookOptions<GetSkillLevelTimelineQuery, GetSkillLevelTimelineQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetSkillLevelTimelineQuery, GetSkillLevelTimelineQueryVariables>(GetSkillLevelTimelineDocument, options);
+      }
+export function useGetSkillLevelTimelineLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetSkillLevelTimelineQuery, GetSkillLevelTimelineQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetSkillLevelTimelineQuery, GetSkillLevelTimelineQueryVariables>(GetSkillLevelTimelineDocument, options);
+        }
+export type GetSkillLevelTimelineQueryHookResult = ReturnType<typeof useGetSkillLevelTimelineQuery>;
+export type GetSkillLevelTimelineLazyQueryHookResult = ReturnType<typeof useGetSkillLevelTimelineLazyQuery>;
+export type GetSkillLevelTimelineQueryResult = Apollo.QueryResult<GetSkillLevelTimelineQuery, GetSkillLevelTimelineQueryVariables>;
 export const GetWrDocument = gql`
     query GetWR($id: Int!) {
   gamesWon: aggregateMatch(
@@ -1085,6 +1220,7 @@ export const GetWrDocument = gql`
     }
   }
   player: findUniquePlayers(where: {id: $id}) {
+    id
     skillLevel
     createdAt
   }

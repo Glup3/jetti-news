@@ -1,0 +1,12 @@
+query GetSkillLevelTimeline($id: Int!) {
+  players: playerHS(take: 9, orderBy: { createdAt: desc }, where: { playerId: { equals: $id } }) {
+    id
+    createdAt
+    skillLevel
+  }
+
+  currentPlayer: findUniquePlayers(where: { id: $id }) {
+    id
+    skillLevel
+  }
+}

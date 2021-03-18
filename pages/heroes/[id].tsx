@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import AlinaStats from '../../components/Hero/AlinaStats/AlinaStats';
 import HeroRecentMatchesCard from '../../components/Hero/HeroRecentMatchesCard';
+import HeroSkillCard from '../../components/Hero/HeroSkillCard';
 import HeroTitle from '../../components/Hero/HeroTitle';
 import HeroWinrateCard from '../../components/Hero/HeroWinrateCard';
 
@@ -24,6 +25,9 @@ function Hero() {
             </div>
 
             <AlinaStats userId={userId} />
+            <div className="col">
+              <HeroSkillCard userId={userId} />
+            </div>
           </div>
         </div>
         <div className="col-md">

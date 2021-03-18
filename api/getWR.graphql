@@ -94,6 +94,7 @@ query GetWR($id: Int!) {
   }
 
   player: findUniquePlayers(where: { id: $id }) {
+    id
     skillLevel
     createdAt
   }
