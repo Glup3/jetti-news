@@ -9,22 +9,27 @@ query GetMatches($take: Int!, $skip: Int!) {
       PlayerH1 {
         userTag
         skillLevel
+        playerId
       }
       PlayerH2 {
         userTag
         skillLevel
+        playerId
       }
       PlayerH3 {
         userTag
         skillLevel
+        playerId
       }
       PlayerH4 {
         userTag
         skillLevel
+        playerId
       }
       PlayerH5 {
         userTag
         skillLevel
+        playerId
       }
     }
     Team2 {
@@ -32,22 +37,27 @@ query GetMatches($take: Int!, $skip: Int!) {
       PlayerH1 {
         userTag
         skillLevel
+        playerId
       }
       PlayerH2 {
         userTag
         skillLevel
+        playerId
       }
       PlayerH3 {
         userTag
         skillLevel
+        playerId
       }
       PlayerH4 {
         userTag
         skillLevel
+        playerId
       }
       PlayerH5 {
         userTag
         skillLevel
+        playerId
       }
     }
   }

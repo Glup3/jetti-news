@@ -19,7 +19,7 @@ function PlayerList() {
 
   return (
     <div className="list-group">
-      {data.findManyPlayers.map((player) => {
+      {data.players.map((player) => {
         const joinDate = DateTime.fromISO(player.createdAt).toLocaleString(DateTime.DATETIME_FULL);
 
         return (

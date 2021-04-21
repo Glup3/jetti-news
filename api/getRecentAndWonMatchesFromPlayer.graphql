@@ -40,22 +40,27 @@ query GetRecentAndWonMatchesFromPlayer($id: Int!, $amount: Int!) {
       PlayerH1 {
         skillLevel
         userTag
+        playerId
       }
       PlayerH2 {
         skillLevel
         userTag
+        playerId
       }
       PlayerH3 {
         skillLevel
         userTag
+        playerId
       }
       PlayerH4 {
         skillLevel
         userTag
+        playerId
       }
       PlayerH5 {
         skillLevel
         userTag
+        playerId
       }
     }
     Team2 {
@@ -63,22 +68,27 @@ query GetRecentAndWonMatchesFromPlayer($id: Int!, $amount: Int!) {
       PlayerH1 {
         skillLevel
         userTag
+        playerId
       }
       PlayerH2 {
         skillLevel
         userTag
+        playerId
       }
       PlayerH3 {
         skillLevel
         userTag
+        playerId
       }
       PlayerH4 {
         skillLevel
         userTag
+        playerId
       }
       PlayerH5 {
         skillLevel
         userTag
+        playerId
       }
     }
   }
@@ -130,7 +140,7 @@ query GetRecentAndWonMatchesFromPlayer($id: Int!, $amount: Int!) {
     id
   }
 
-  player: findUniquePlayers(where: { id: $id }) {
+  player(where: { id: $id }) {
     id
     userTag
   }

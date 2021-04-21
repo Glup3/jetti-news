@@ -5,7 +5,7 @@ query GetSkillLevelTimeline($id: Int!) {
     skillLevel
   }
 
-  currentPlayer: findUniquePlayers(where: { id: $id }) {
+  currentPlayer: player(where: { id: $id }) {
     id
     skillLevel
   }

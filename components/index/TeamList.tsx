@@ -2,8 +2,8 @@ import React from 'react';
 import classNames from 'classnames';
 
 import { GetMatchesQuery } from '../../generated/graphql';
-import RankIcon from '../RankIcon';
 import WinnerBadge from './WinnerBadge';
+import TeamListPlayer from '../TeamListPlayer';
 
 interface TeamListProps {
   team: GetMatchesQuery['matches'][number]['Team1'];
@@ -18,21 +18,11 @@ function TeamList({ team, won }: TeamListProps) {
         {won && <WinnerBadge />}
       </div>
       <div className="text-medium">
-        <div>
-          <RankIcon skillLevel={team.PlayerH1.skillLevel} /> {team.PlayerH1.userTag}
-        </div>
-        <div>
-          <RankIcon skillLevel={team.PlayerH2.skillLevel} /> {team.PlayerH2.userTag}
-        </div>
-        <div>
-          <RankIcon skillLevel={team.PlayerH3.skillLevel} /> {team.PlayerH3.userTag}
-        </div>
-        <div>
-          <RankIcon skillLevel={team.PlayerH4.skillLevel} /> {team.PlayerH4.userTag}
-        </div>
-        <div>
-          <RankIcon skillLevel={team.PlayerH5.skillLevel} /> {team.PlayerH5.userTag}
-        </div>
+        <TeamListPlayer username={team.PlayerH1.userTag} rank={team.PlayerH1.skillLevel} id={team.PlayerH1.playerId} />
+        <TeamListPlayer username={team.PlayerH2.userTag} rank={team.PlayerH2.skillLevel} id={team.PlayerH2.playerId} />
+        <TeamListPlayer username={team.PlayerH3.userTag} rank={team.PlayerH3.skillLevel} id={team.PlayerH3.playerId} />
+        <TeamListPlayer username={team.PlayerH4.userTag} rank={team.PlayerH4.skillLevel} id={team.PlayerH4.playerId} />
+        <TeamListPlayer username={team.PlayerH5.userTag} rank={team.PlayerH5.skillLevel} id={team.PlayerH5.playerId} />
       </div>
     </div>
   );

@@ -1,0 +1,22 @@
+@import "../node_modules/bootstrap/scss/functions";
+@import "../node_modules/bootstrap/scss/variables";
+@import "../node_modules/bootstrap/scss/mixins";
+@import "./variables";
+
+.normal {
+  color: $text-color-medium;
+  text-decoration: none;
+
+  &:hover {
+    color: $purple-600;
+  }
+}
+
+.special {
+  color: $purple-400;
+  text-decoration: none;
+
+  &:hover {
+    color: $purple-600;
+  }
+}

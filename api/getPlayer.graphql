@@ -1,5 +1,5 @@
 query GetPlayer($id: Int!) {
-  player: findUniquePlayers(where: { id: $id }) {
+  player(where: { id: $id }) {
     id
     userTag
   }
