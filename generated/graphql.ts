@@ -103,6 +103,7 @@ export type Match = {
   id: Scalars['Int'];
   matchResult?: Maybe<Scalars['Int']>;
   screenshotPath?: Maybe<Scalars['String']>;
+  map?: Maybe<Map>;
   teamId1?: Maybe<Scalars['Int']>;
   teamId2?: Maybe<Scalars['Int']>;
   createdAt: Scalars['DateTime'];
@@ -110,6 +111,15 @@ export type Match = {
   Team1?: Maybe<Team>;
   Team2?: Maybe<Team>;
 };
+
+export enum Map {
+  Bind = 'BIND',
+  Split = 'SPLIT',
+  Haven = 'HAVEN',
+  Ascent = 'ASCENT',
+  Icebox = 'ICEBOX',
+  Breeze = 'BREEZE'
+}
 
 
 export type Team = {
@@ -224,6 +234,8 @@ export type Player = {
   userId?: Maybe<Scalars['String']>;
   skillLevel?: Maybe<Scalars['Float']>;
   userTag?: Maybe<Scalars['String']>;
+  favoriteMap?: Maybe<Map>;
+  imageUrl?: Maybe<Scalars['String']>;
   createdAt: Scalars['DateTime'];
   updatedAt: Scalars['DateTime'];
   PlayerH: Array<PlayerH>;
@@ -392,9 +404,25 @@ export type PlayerWhereInput = {
   userId?: Maybe<StringNullableFilter>;
   skillLevel?: Maybe<FloatNullableFilter>;
   userTag?: Maybe<StringNullableFilter>;
+  favoriteMap?: Maybe<EnumMapNullableFilter>;
+  imageUrl?: Maybe<StringNullableFilter>;
   createdAt?: Maybe<DateTimeFilter>;
   updatedAt?: Maybe<DateTimeFilter>;
   PlayerH?: Maybe<PlayerHListRelationFilter>;
+};
+
+export type EnumMapNullableFilter = {
+  equals?: Maybe<Map>;
+  in?: Maybe<Array<Map>>;
+  notIn?: Maybe<Array<Map>>;
+  not?: Maybe<NestedEnumMapNullableFilter>;
+};
+
+export type NestedEnumMapNullableFilter = {
+  equals?: Maybe<Map>;
+  in?: Maybe<Array<Map>>;
+  notIn?: Maybe<Array<Map>>;
+  not?: Maybe<NestedEnumMapNullableFilter>;
 };
 
 export type PlayerHListRelationFilter = {
@@ -449,6 +477,7 @@ export type MatchWhereInput = {
   id?: Maybe<IntFilter>;
   matchResult?: Maybe<IntNullableFilter>;
   screenshotPath?: Maybe<StringNullableFilter>;
+  map?: Maybe<EnumMapNullableFilter>;
   teamId1?: Maybe<IntNullableFilter>;
   teamId2?: Maybe<IntNullableFilter>;
   createdAt?: Maybe<DateTimeFilter>;
@@ -469,22 +498,12 @@ export type PlayerHOrderByInput = {
   userTag?: Maybe<SortOrder>;
   createdAt?: Maybe<SortOrder>;
   updatedAt?: Maybe<SortOrder>;
-  Player?: Maybe<PlayerOrderByInput>;
 };
 
 export enum SortOrder {
   Asc = 'asc',
   Desc = 'desc'
 }
-
-export type PlayerOrderByInput = {
-  id?: Maybe<SortOrder>;
-  userId?: Maybe<SortOrder>;
-  skillLevel?: Maybe<SortOrder>;
-  userTag?: Maybe<SortOrder>;
-  createdAt?: Maybe<SortOrder>;
-  updatedAt?: Maybe<SortOrder>;
-};
 
 export type PlayerHWhereUniqueInput = {
   id?: Maybe<Scalars['Int']>;
@@ -509,11 +528,6 @@ export type TeamOrderByInput = {
   playerId5?: Maybe<SortOrder>;
   createdAt?: Maybe<SortOrder>;
   updatedAt?: Maybe<SortOrder>;
-  PlayerH1?: Maybe<PlayerHOrderByInput>;
-  PlayerH2?: Maybe<PlayerHOrderByInput>;
-  PlayerH3?: Maybe<PlayerHOrderByInput>;
-  PlayerH4?: Maybe<PlayerHOrderByInput>;
-  PlayerH5?: Maybe<PlayerHOrderByInput>;
 };
 
 export type TeamWhereUniqueInput = {
@@ -536,12 +550,11 @@ export type MatchOrderByInput = {
   id?: Maybe<SortOrder>;
   matchResult?: Maybe<SortOrder>;
   screenshotPath?: Maybe<SortOrder>;
+  map?: Maybe<SortOrder>;
   teamId1?: Maybe<SortOrder>;
   teamId2?: Maybe<SortOrder>;
   createdAt?: Maybe<SortOrder>;
   updatedAt?: Maybe<SortOrder>;
-  Team1?: Maybe<TeamOrderByInput>;
-  Team2?: Maybe<TeamOrderByInput>;
 };
 
 export type MatchWhereUniqueInput = {
@@ -552,6 +565,7 @@ export enum MatchScalarFieldEnum {
   Id = 'id',
   MatchResult = 'matchResult',
   ScreenshotPath = 'screenshotPath',
+  Map = 'map',
   TeamId1 = 'teamId1',
   TeamId2 = 'teamId2',
   CreatedAt = 'createdAt',
@@ -572,6 +586,7 @@ export type MatchCountAggregate = {
   id: Scalars['Int'];
   matchResult?: Maybe<Scalars['Int']>;
   screenshotPath?: Maybe<Scalars['Int']>;
+  map?: Maybe<Scalars['Int']>;
   teamId1?: Maybe<Scalars['Int']>;
   teamId2?: Maybe<Scalars['Int']>;
   createdAt?: Maybe<Scalars['Int']>;
@@ -600,6 +615,7 @@ export type MatchMinAggregate = {
   id: Scalars['Int'];
   matchResult?: Maybe<Scalars['Int']>;
   screenshotPath?: Maybe<Scalars['String']>;
+  map?: Maybe<Map>;
   teamId1?: Maybe<Scalars['Int']>;
   teamId2?: Maybe<Scalars['Int']>;
   createdAt?: Maybe<Scalars['DateTime']>;
@@ -611,6 +627,7 @@ export type MatchMaxAggregate = {
   id: Scalars['Int'];
   matchResult?: Maybe<Scalars['Int']>;
   screenshotPath?: Maybe<Scalars['String']>;
+  map?: Maybe<Map>;
   teamId1?: Maybe<Scalars['Int']>;
   teamId2?: Maybe<Scalars['Int']>;
   createdAt?: Maybe<Scalars['DateTime']>;
@@ -622,20 +639,56 @@ export type PlayerWhereUniqueInput = {
   userId?: Maybe<Scalars['String']>;
 };
 
+export type PlayerOrderByInput = {
+  id?: Maybe<SortOrder>;
+  userId?: Maybe<SortOrder>;
+  skillLevel?: Maybe<SortOrder>;
+  userTag?: Maybe<SortOrder>;
+  favoriteMap?: Maybe<SortOrder>;
+  imageUrl?: Maybe<SortOrder>;
+  createdAt?: Maybe<SortOrder>;
+  updatedAt?: Maybe<SortOrder>;
+};
+
 export enum PlayerScalarFieldEnum {
   Id = 'id',
   UserId = 'userId',
   SkillLevel = 'skillLevel',
   UserTag = 'userTag',
+  FavoriteMap = 'favoriteMap',
+  ImageUrl = 'imageUrl',
   CreatedAt = 'createdAt',
   UpdatedAt = 'updatedAt'
 }
 
 export type Mutation = {
   __typename?: 'Mutation';
+  createMatch: Match;
+  deleteMatch?: Maybe<Match>;
+  updateMatch?: Maybe<Match>;
   createPlayer: Player;
   deletePlayer?: Maybe<Player>;
   updatePlayer?: Maybe<Player>;
+  updatePlayerH?: Maybe<PlayerH>;
+  createTeam: Team;
+  deleteTeam?: Maybe<Team>;
+  updateTeam?: Maybe<Team>;
+};
+
+
+export type MutationCreateMatchArgs = {
+  data: MatchCreateInput;
+};
+
+
+export type MutationDeleteMatchArgs = {
+  where: MatchWhereUniqueInput;
+};
+
+
+export type MutationUpdateMatchArgs = {
+  data: MatchUpdateInput;
+  where: MatchWhereUniqueInput;
 };
 
 
@@ -654,103 +707,53 @@ export type MutationUpdatePlayerArgs = {
   where: PlayerWhereUniqueInput;
 };
 
-export type PlayerCreateInput = {
-  userId?: Maybe<Scalars['String']>;
-  skillLevel?: Maybe<Scalars['Float']>;
-  userTag?: Maybe<Scalars['String']>;
+
+export type MutationUpdatePlayerHArgs = {
+  data: PlayerHUpdateInput;
+  where: PlayerHWhereUniqueInput;
+};
+
+
+export type MutationCreateTeamArgs = {
+  data: TeamCreateInput;
+};
+
+
+export type MutationDeleteTeamArgs = {
+  where: TeamWhereUniqueInput;
+};
+
+
+export type MutationUpdateTeamArgs = {
+  data: TeamUpdateInput;
+  where: TeamWhereUniqueInput;
+};
+
+export type MatchCreateInput = {
+  matchResult?: Maybe<Scalars['Int']>;
+  screenshotPath?: Maybe<Scalars['String']>;
+  map?: Maybe<Map>;
   createdAt?: Maybe<Scalars['DateTime']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
-  PlayerH?: Maybe<PlayerHCreateNestedManyWithoutPlayerInput>;
+  Team1?: Maybe<TeamCreateNestedOneWithoutMatch1Input>;
+  Team2?: Maybe<TeamCreateNestedOneWithoutMatch2Input>;
 };
 
-export type PlayerHCreateNestedManyWithoutPlayerInput = {
-  create?: Maybe<Array<PlayerHCreateWithoutPlayerInput>>;
-  connectOrCreate?: Maybe<Array<PlayerHCreateOrConnectWithoutPlayerInput>>;
-  connect?: Maybe<Array<PlayerHWhereUniqueInput>>;
+export type TeamCreateNestedOneWithoutMatch1Input = {
+  create?: Maybe<TeamCreateWithoutMatch1Input>;
+  connectOrCreate?: Maybe<TeamCreateOrConnectWithoutMatch1Input>;
+  connect?: Maybe<TeamWhereUniqueInput>;
 };
 
-export type PlayerHCreateWithoutPlayerInput = {
-  skillLevel?: Maybe<Scalars['Float']>;
-  userTag?: Maybe<Scalars['String']>;
-  createdAt?: Maybe<Scalars['DateTime']>;
-  updatedAt?: Maybe<Scalars['DateTime']>;
-  Team1?: Maybe<TeamCreateNestedManyWithoutPlayerH1Input>;
-  Team2?: Maybe<TeamCreateNestedManyWithoutPlayerH2Input>;
-  Team3?: Maybe<TeamCreateNestedManyWithoutPlayerH3Input>;
-  Team4?: Maybe<TeamCreateNestedManyWithoutPlayerH4Input>;
-  Team5?: Maybe<TeamCreateNestedManyWithoutPlayerH5Input>;
-};
-
-export type TeamCreateNestedManyWithoutPlayerH1Input = {
-  create?: Maybe<Array<TeamCreateWithoutPlayerH1Input>>;
-  connectOrCreate?: Maybe<Array<TeamCreateOrConnectWithoutPlayerH1Input>>;
-  connect?: Maybe<Array<TeamWhereUniqueInput>>;
-};
-
-export type TeamCreateWithoutPlayerH1Input = {
-  teamName?: Maybe<Scalars['String']>;
-  createdAt?: Maybe<Scalars['DateTime']>;
-  updatedAt?: Maybe<Scalars['DateTime']>;
-  PlayerH2?: Maybe<PlayerHCreateNestedOneWithoutTeam2Input>;
-  PlayerH3?: Maybe<PlayerHCreateNestedOneWithoutTeam3Input>;
-  PlayerH4?: Maybe<PlayerHCreateNestedOneWithoutTeam4Input>;
-  PlayerH5?: Maybe<PlayerHCreateNestedOneWithoutTeam5Input>;
-  Match1?: Maybe<MatchCreateNestedManyWithoutTeam1Input>;
-  Match2?: Maybe<MatchCreateNestedManyWithoutTeam2Input>;
-};
-
-export type PlayerHCreateNestedOneWithoutTeam2Input = {
-  create?: Maybe<PlayerHCreateWithoutTeam2Input>;
-  connectOrCreate?: Maybe<PlayerHCreateOrConnectWithoutTeam2Input>;
-  connect?: Maybe<PlayerHWhereUniqueInput>;
-};
-
-export type PlayerHCreateWithoutTeam2Input = {
-  skillLevel?: Maybe<Scalars['Float']>;
-  userTag?: Maybe<Scalars['String']>;
-  createdAt?: Maybe<Scalars['DateTime']>;
-  updatedAt?: Maybe<Scalars['DateTime']>;
-  Player?: Maybe<PlayerCreateNestedOneWithoutPlayerHInput>;
-  Team1?: Maybe<TeamCreateNestedManyWithoutPlayerH1Input>;
-  Team3?: Maybe<TeamCreateNestedManyWithoutPlayerH3Input>;
-  Team4?: Maybe<TeamCreateNestedManyWithoutPlayerH4Input>;
-  Team5?: Maybe<TeamCreateNestedManyWithoutPlayerH5Input>;
-};
-
-export type PlayerCreateNestedOneWithoutPlayerHInput = {
-  create?: Maybe<PlayerCreateWithoutPlayerHInput>;
-  connectOrCreate?: Maybe<PlayerCreateOrConnectWithoutPlayerHInput>;
-  connect?: Maybe<PlayerWhereUniqueInput>;
-};
-
-export type PlayerCreateWithoutPlayerHInput = {
-  userId?: Maybe<Scalars['String']>;
-  skillLevel?: Maybe<Scalars['Float']>;
-  userTag?: Maybe<Scalars['String']>;
-  createdAt?: Maybe<Scalars['DateTime']>;
-  updatedAt?: Maybe<Scalars['DateTime']>;
-};
-
-export type PlayerCreateOrConnectWithoutPlayerHInput = {
-  where: PlayerWhereUniqueInput;
-  create: PlayerCreateWithoutPlayerHInput;
-};
-
-export type TeamCreateNestedManyWithoutPlayerH3Input = {
-  create?: Maybe<Array<TeamCreateWithoutPlayerH3Input>>;
-  connectOrCreate?: Maybe<Array<TeamCreateOrConnectWithoutPlayerH3Input>>;
-  connect?: Maybe<Array<TeamWhereUniqueInput>>;
-};
-
-export type TeamCreateWithoutPlayerH3Input = {
+export type TeamCreateWithoutMatch1Input = {
   teamName?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['DateTime']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
   PlayerH1?: Maybe<PlayerHCreateNestedOneWithoutTeam1Input>;
   PlayerH2?: Maybe<PlayerHCreateNestedOneWithoutTeam2Input>;
+  PlayerH3?: Maybe<PlayerHCreateNestedOneWithoutTeam3Input>;
   PlayerH4?: Maybe<PlayerHCreateNestedOneWithoutTeam4Input>;
   PlayerH5?: Maybe<PlayerHCreateNestedOneWithoutTeam5Input>;
-  Match1?: Maybe<MatchCreateNestedManyWithoutTeam1Input>;
   Match2?: Maybe<MatchCreateNestedManyWithoutTeam2Input>;
 };
 
@@ -772,9 +775,31 @@ export type PlayerHCreateWithoutTeam1Input = {
   Team5?: Maybe<TeamCreateNestedManyWithoutPlayerH5Input>;
 };
 
+export type PlayerCreateNestedOneWithoutPlayerHInput = {
+  create?: Maybe<PlayerCreateWithoutPlayerHInput>;
+  connectOrCreate?: Maybe<PlayerCreateOrConnectWithoutPlayerHInput>;
+  connect?: Maybe<PlayerWhereUniqueInput>;
+};
+
+export type PlayerCreateWithoutPlayerHInput = {
+  userId?: Maybe<Scalars['String']>;
+  skillLevel?: Maybe<Scalars['Float']>;
+  userTag?: Maybe<Scalars['String']>;
+  favoriteMap?: Maybe<Map>;
+  imageUrl?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type PlayerCreateOrConnectWithoutPlayerHInput = {
+  where: PlayerWhereUniqueInput;
+  create: PlayerCreateWithoutPlayerHInput;
+};
+
 export type TeamCreateNestedManyWithoutPlayerH2Input = {
   create?: Maybe<Array<TeamCreateWithoutPlayerH2Input>>;
   connectOrCreate?: Maybe<Array<TeamCreateOrConnectWithoutPlayerH2Input>>;
+  createMany?: Maybe<TeamCreateManyPlayerH2InputEnvelope>;
   connect?: Maybe<Array<TeamWhereUniqueInput>>;
 };
 
@@ -808,77 +833,60 @@ export type PlayerHCreateWithoutTeam3Input = {
   Team5?: Maybe<TeamCreateNestedManyWithoutPlayerH5Input>;
 };
 
-export type TeamCreateNestedManyWithoutPlayerH4Input = {
-  create?: Maybe<Array<TeamCreateWithoutPlayerH4Input>>;
-  connectOrCreate?: Maybe<Array<TeamCreateOrConnectWithoutPlayerH4Input>>;
+export type TeamCreateNestedManyWithoutPlayerH1Input = {
+  create?: Maybe<Array<TeamCreateWithoutPlayerH1Input>>;
+  connectOrCreate?: Maybe<Array<TeamCreateOrConnectWithoutPlayerH1Input>>;
+  createMany?: Maybe<TeamCreateManyPlayerH1InputEnvelope>;
   connect?: Maybe<Array<TeamWhereUniqueInput>>;
 };
 
-export type TeamCreateWithoutPlayerH4Input = {
+export type TeamCreateWithoutPlayerH1Input = {
   teamName?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['DateTime']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
-  PlayerH1?: Maybe<PlayerHCreateNestedOneWithoutTeam1Input>;
   PlayerH2?: Maybe<PlayerHCreateNestedOneWithoutTeam2Input>;
   PlayerH3?: Maybe<PlayerHCreateNestedOneWithoutTeam3Input>;
+  PlayerH4?: Maybe<PlayerHCreateNestedOneWithoutTeam4Input>;
   PlayerH5?: Maybe<PlayerHCreateNestedOneWithoutTeam5Input>;
   Match1?: Maybe<MatchCreateNestedManyWithoutTeam1Input>;
   Match2?: Maybe<MatchCreateNestedManyWithoutTeam2Input>;
 };
 
-export type PlayerHCreateNestedOneWithoutTeam5Input = {
-  create?: Maybe<PlayerHCreateWithoutTeam5Input>;
-  connectOrCreate?: Maybe<PlayerHCreateOrConnectWithoutTeam5Input>;
+export type PlayerHCreateNestedOneWithoutTeam2Input = {
+  create?: Maybe<PlayerHCreateWithoutTeam2Input>;
+  connectOrCreate?: Maybe<PlayerHCreateOrConnectWithoutTeam2Input>;
   connect?: Maybe<PlayerHWhereUniqueInput>;
 };
 
-export type PlayerHCreateWithoutTeam5Input = {
+export type PlayerHCreateWithoutTeam2Input = {
   skillLevel?: Maybe<Scalars['Float']>;
   userTag?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['DateTime']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
   Player?: Maybe<PlayerCreateNestedOneWithoutPlayerHInput>;
   Team1?: Maybe<TeamCreateNestedManyWithoutPlayerH1Input>;
-  Team2?: Maybe<TeamCreateNestedManyWithoutPlayerH2Input>;
   Team3?: Maybe<TeamCreateNestedManyWithoutPlayerH3Input>;
   Team4?: Maybe<TeamCreateNestedManyWithoutPlayerH4Input>;
+  Team5?: Maybe<TeamCreateNestedManyWithoutPlayerH5Input>;
 };
 
-export type PlayerHCreateOrConnectWithoutTeam5Input = {
-  where: PlayerHWhereUniqueInput;
-  create: PlayerHCreateWithoutTeam5Input;
+export type TeamCreateNestedManyWithoutPlayerH3Input = {
+  create?: Maybe<Array<TeamCreateWithoutPlayerH3Input>>;
+  connectOrCreate?: Maybe<Array<TeamCreateOrConnectWithoutPlayerH3Input>>;
+  createMany?: Maybe<TeamCreateManyPlayerH3InputEnvelope>;
+  connect?: Maybe<Array<TeamWhereUniqueInput>>;
 };
 
-export type MatchCreateNestedManyWithoutTeam1Input = {
-  create?: Maybe<Array<MatchCreateWithoutTeam1Input>>;
-  connectOrCreate?: Maybe<Array<MatchCreateOrConnectWithoutTeam1Input>>;
-  connect?: Maybe<Array<MatchWhereUniqueInput>>;
-};
-
-export type MatchCreateWithoutTeam1Input = {
-  matchResult?: Maybe<Scalars['Int']>;
-  screenshotPath?: Maybe<Scalars['String']>;
-  createdAt?: Maybe<Scalars['DateTime']>;
-  updatedAt?: Maybe<Scalars['DateTime']>;
-  Team2?: Maybe<TeamCreateNestedOneWithoutMatch2Input>;
-};
-
-export type TeamCreateNestedOneWithoutMatch2Input = {
-  create?: Maybe<TeamCreateWithoutMatch2Input>;
-  connectOrCreate?: Maybe<TeamCreateOrConnectWithoutMatch2Input>;
-  connect?: Maybe<TeamWhereUniqueInput>;
-};
-
-export type TeamCreateWithoutMatch2Input = {
+export type TeamCreateWithoutPlayerH3Input = {
   teamName?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['DateTime']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
   PlayerH1?: Maybe<PlayerHCreateNestedOneWithoutTeam1Input>;
   PlayerH2?: Maybe<PlayerHCreateNestedOneWithoutTeam2Input>;
-  PlayerH3?: Maybe<PlayerHCreateNestedOneWithoutTeam3Input>;
   PlayerH4?: Maybe<PlayerHCreateNestedOneWithoutTeam4Input>;
   PlayerH5?: Maybe<PlayerHCreateNestedOneWithoutTeam5Input>;
   Match1?: Maybe<MatchCreateNestedManyWithoutTeam1Input>;
+  Match2?: Maybe<MatchCreateNestedManyWithoutTeam2Input>;
 };
 
 export type PlayerHCreateNestedOneWithoutTeam4Input = {
@@ -902,6 +910,7 @@ export type PlayerHCreateWithoutTeam4Input = {
 export type TeamCreateNestedManyWithoutPlayerH5Input = {
   create?: Maybe<Array<TeamCreateWithoutPlayerH5Input>>;
   connectOrCreate?: Maybe<Array<TeamCreateOrConnectWithoutPlayerH5Input>>;
+  createMany?: Maybe<TeamCreateManyPlayerH5InputEnvelope>;
   connect?: Maybe<Array<TeamWhereUniqueInput>>;
 };
 
@@ -917,27 +926,29 @@ export type TeamCreateWithoutPlayerH5Input = {
   Match2?: Maybe<MatchCreateNestedManyWithoutTeam2Input>;
 };
 
-export type MatchCreateNestedManyWithoutTeam2Input = {
-  create?: Maybe<Array<MatchCreateWithoutTeam2Input>>;
-  connectOrCreate?: Maybe<Array<MatchCreateOrConnectWithoutTeam2Input>>;
+export type MatchCreateNestedManyWithoutTeam1Input = {
+  create?: Maybe<Array<MatchCreateWithoutTeam1Input>>;
+  connectOrCreate?: Maybe<Array<MatchCreateOrConnectWithoutTeam1Input>>;
+  createMany?: Maybe<MatchCreateManyTeam1InputEnvelope>;
   connect?: Maybe<Array<MatchWhereUniqueInput>>;
 };
 
-export type MatchCreateWithoutTeam2Input = {
+export type MatchCreateWithoutTeam1Input = {
   matchResult?: Maybe<Scalars['Int']>;
   screenshotPath?: Maybe<Scalars['String']>;
+  map?: Maybe<Map>;
   createdAt?: Maybe<Scalars['DateTime']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
-  Team1?: Maybe<TeamCreateNestedOneWithoutMatch1Input>;
+  Team2?: Maybe<TeamCreateNestedOneWithoutMatch2Input>;
 };
 
-export type TeamCreateNestedOneWithoutMatch1Input = {
-  create?: Maybe<TeamCreateWithoutMatch1Input>;
-  connectOrCreate?: Maybe<TeamCreateOrConnectWithoutMatch1Input>;
+export type TeamCreateNestedOneWithoutMatch2Input = {
+  create?: Maybe<TeamCreateWithoutMatch2Input>;
+  connectOrCreate?: Maybe<TeamCreateOrConnectWithoutMatch2Input>;
   connect?: Maybe<TeamWhereUniqueInput>;
 };
 
-export type TeamCreateWithoutMatch1Input = {
+export type TeamCreateWithoutMatch2Input = {
   teamName?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['DateTime']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
@@ -946,12 +957,60 @@ export type TeamCreateWithoutMatch1Input = {
   PlayerH3?: Maybe<PlayerHCreateNestedOneWithoutTeam3Input>;
   PlayerH4?: Maybe<PlayerHCreateNestedOneWithoutTeam4Input>;
   PlayerH5?: Maybe<PlayerHCreateNestedOneWithoutTeam5Input>;
+  Match1?: Maybe<MatchCreateNestedManyWithoutTeam1Input>;
+};
+
+export type PlayerHCreateNestedOneWithoutTeam5Input = {
+  create?: Maybe<PlayerHCreateWithoutTeam5Input>;
+  connectOrCreate?: Maybe<PlayerHCreateOrConnectWithoutTeam5Input>;
+  connect?: Maybe<PlayerHWhereUniqueInput>;
+};
+
+export type PlayerHCreateWithoutTeam5Input = {
+  skillLevel?: Maybe<Scalars['Float']>;
+  userTag?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  Player?: Maybe<PlayerCreateNestedOneWithoutPlayerHInput>;
+  Team1?: Maybe<TeamCreateNestedManyWithoutPlayerH1Input>;
+  Team2?: Maybe<TeamCreateNestedManyWithoutPlayerH2Input>;
+  Team3?: Maybe<TeamCreateNestedManyWithoutPlayerH3Input>;
+  Team4?: Maybe<TeamCreateNestedManyWithoutPlayerH4Input>;
+};
+
+export type TeamCreateNestedManyWithoutPlayerH4Input = {
+  create?: Maybe<Array<TeamCreateWithoutPlayerH4Input>>;
+  connectOrCreate?: Maybe<Array<TeamCreateOrConnectWithoutPlayerH4Input>>;
+  createMany?: Maybe<TeamCreateManyPlayerH4InputEnvelope>;
+  connect?: Maybe<Array<TeamWhereUniqueInput>>;
+};
+
+export type TeamCreateWithoutPlayerH4Input = {
+  teamName?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  PlayerH1?: Maybe<PlayerHCreateNestedOneWithoutTeam1Input>;
+  PlayerH2?: Maybe<PlayerHCreateNestedOneWithoutTeam2Input>;
+  PlayerH3?: Maybe<PlayerHCreateNestedOneWithoutTeam3Input>;
+  PlayerH5?: Maybe<PlayerHCreateNestedOneWithoutTeam5Input>;
+  Match1?: Maybe<MatchCreateNestedManyWithoutTeam1Input>;
   Match2?: Maybe<MatchCreateNestedManyWithoutTeam2Input>;
 };
 
-export type TeamCreateOrConnectWithoutMatch1Input = {
-  where: TeamWhereUniqueInput;
-  create: TeamCreateWithoutMatch1Input;
+export type MatchCreateNestedManyWithoutTeam2Input = {
+  create?: Maybe<Array<MatchCreateWithoutTeam2Input>>;
+  connectOrCreate?: Maybe<Array<MatchCreateOrConnectWithoutTeam2Input>>;
+  createMany?: Maybe<MatchCreateManyTeam2InputEnvelope>;
+  connect?: Maybe<Array<MatchWhereUniqueInput>>;
+};
+
+export type MatchCreateWithoutTeam2Input = {
+  matchResult?: Maybe<Scalars['Int']>;
+  screenshotPath?: Maybe<Scalars['String']>;
+  map?: Maybe<Map>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  Team1?: Maybe<TeamCreateNestedOneWithoutMatch1Input>;
 };
 
 export type MatchCreateOrConnectWithoutTeam2Input = {
@@ -959,14 +1018,45 @@ export type MatchCreateOrConnectWithoutTeam2Input = {
   create: MatchCreateWithoutTeam2Input;
 };
 
-export type TeamCreateOrConnectWithoutPlayerH5Input = {
-  where: TeamWhereUniqueInput;
-  create: TeamCreateWithoutPlayerH5Input;
+export type MatchCreateManyTeam2InputEnvelope = {
+  data: Array<MatchCreateManyTeam2Input>;
+  skipDuplicates?: Maybe<Scalars['Boolean']>;
 };
 
-export type PlayerHCreateOrConnectWithoutTeam4Input = {
+export type MatchCreateManyTeam2Input = {
+  id?: Maybe<Scalars['Int']>;
+  matchResult?: Maybe<Scalars['Int']>;
+  screenshotPath?: Maybe<Scalars['String']>;
+  map?: Maybe<Map>;
+  teamId1?: Maybe<Scalars['Int']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type TeamCreateOrConnectWithoutPlayerH4Input = {
+  where: TeamWhereUniqueInput;
+  create: TeamCreateWithoutPlayerH4Input;
+};
+
+export type TeamCreateManyPlayerH4InputEnvelope = {
+  data: Array<TeamCreateManyPlayerH4Input>;
+  skipDuplicates?: Maybe<Scalars['Boolean']>;
+};
+
+export type TeamCreateManyPlayerH4Input = {
+  id?: Maybe<Scalars['Int']>;
+  teamName?: Maybe<Scalars['String']>;
+  playerId1?: Maybe<Scalars['Int']>;
+  playerId2?: Maybe<Scalars['Int']>;
+  playerId3?: Maybe<Scalars['Int']>;
+  playerId5?: Maybe<Scalars['Int']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type PlayerHCreateOrConnectWithoutTeam5Input = {
   where: PlayerHWhereUniqueInput;
-  create: PlayerHCreateWithoutTeam4Input;
+  create: PlayerHCreateWithoutTeam5Input;
 };
 
 export type TeamCreateOrConnectWithoutMatch2Input = {
@@ -979,29 +1069,66 @@ export type MatchCreateOrConnectWithoutTeam1Input = {
   create: MatchCreateWithoutTeam1Input;
 };
 
-export type TeamCreateOrConnectWithoutPlayerH4Input = {
+export type MatchCreateManyTeam1InputEnvelope = {
+  data: Array<MatchCreateManyTeam1Input>;
+  skipDuplicates?: Maybe<Scalars['Boolean']>;
+};
+
+export type MatchCreateManyTeam1Input = {
+  id?: Maybe<Scalars['Int']>;
+  matchResult?: Maybe<Scalars['Int']>;
+  screenshotPath?: Maybe<Scalars['String']>;
+  map?: Maybe<Map>;
+  teamId2?: Maybe<Scalars['Int']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type TeamCreateOrConnectWithoutPlayerH5Input = {
   where: TeamWhereUniqueInput;
-  create: TeamCreateWithoutPlayerH4Input;
+  create: TeamCreateWithoutPlayerH5Input;
 };
 
-export type PlayerHCreateOrConnectWithoutTeam3Input = {
+export type TeamCreateManyPlayerH5InputEnvelope = {
+  data: Array<TeamCreateManyPlayerH5Input>;
+  skipDuplicates?: Maybe<Scalars['Boolean']>;
+};
+
+export type TeamCreateManyPlayerH5Input = {
+  id?: Maybe<Scalars['Int']>;
+  teamName?: Maybe<Scalars['String']>;
+  playerId1?: Maybe<Scalars['Int']>;
+  playerId2?: Maybe<Scalars['Int']>;
+  playerId3?: Maybe<Scalars['Int']>;
+  playerId4?: Maybe<Scalars['Int']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type PlayerHCreateOrConnectWithoutTeam4Input = {
   where: PlayerHWhereUniqueInput;
-  create: PlayerHCreateWithoutTeam3Input;
-};
-
-export type TeamCreateOrConnectWithoutPlayerH2Input = {
-  where: TeamWhereUniqueInput;
-  create: TeamCreateWithoutPlayerH2Input;
-};
-
-export type PlayerHCreateOrConnectWithoutTeam1Input = {
-  where: PlayerHWhereUniqueInput;
-  create: PlayerHCreateWithoutTeam1Input;
+  create: PlayerHCreateWithoutTeam4Input;
 };
 
 export type TeamCreateOrConnectWithoutPlayerH3Input = {
   where: TeamWhereUniqueInput;
   create: TeamCreateWithoutPlayerH3Input;
+};
+
+export type TeamCreateManyPlayerH3InputEnvelope = {
+  data: Array<TeamCreateManyPlayerH3Input>;
+  skipDuplicates?: Maybe<Scalars['Boolean']>;
+};
+
+export type TeamCreateManyPlayerH3Input = {
+  id?: Maybe<Scalars['Int']>;
+  teamName?: Maybe<Scalars['String']>;
+  playerId1?: Maybe<Scalars['Int']>;
+  playerId2?: Maybe<Scalars['Int']>;
+  playerId4?: Maybe<Scalars['Int']>;
+  playerId5?: Maybe<Scalars['Int']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type PlayerHCreateOrConnectWithoutTeam2Input = {
@@ -1014,176 +1141,112 @@ export type TeamCreateOrConnectWithoutPlayerH1Input = {
   create: TeamCreateWithoutPlayerH1Input;
 };
 
-export type PlayerHCreateOrConnectWithoutPlayerInput = {
-  where: PlayerHWhereUniqueInput;
-  create: PlayerHCreateWithoutPlayerInput;
+export type TeamCreateManyPlayerH1InputEnvelope = {
+  data: Array<TeamCreateManyPlayerH1Input>;
+  skipDuplicates?: Maybe<Scalars['Boolean']>;
 };
 
-export type PlayerUpdateInput = {
-  userId?: Maybe<NullableStringFieldUpdateOperationsInput>;
-  skillLevel?: Maybe<NullableFloatFieldUpdateOperationsInput>;
-  userTag?: Maybe<NullableStringFieldUpdateOperationsInput>;
+export type TeamCreateManyPlayerH1Input = {
+  id?: Maybe<Scalars['Int']>;
+  teamName?: Maybe<Scalars['String']>;
+  playerId2?: Maybe<Scalars['Int']>;
+  playerId3?: Maybe<Scalars['Int']>;
+  playerId4?: Maybe<Scalars['Int']>;
+  playerId5?: Maybe<Scalars['Int']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type PlayerHCreateOrConnectWithoutTeam3Input = {
+  where: PlayerHWhereUniqueInput;
+  create: PlayerHCreateWithoutTeam3Input;
+};
+
+export type TeamCreateOrConnectWithoutPlayerH2Input = {
+  where: TeamWhereUniqueInput;
+  create: TeamCreateWithoutPlayerH2Input;
+};
+
+export type TeamCreateManyPlayerH2InputEnvelope = {
+  data: Array<TeamCreateManyPlayerH2Input>;
+  skipDuplicates?: Maybe<Scalars['Boolean']>;
+};
+
+export type TeamCreateManyPlayerH2Input = {
+  id?: Maybe<Scalars['Int']>;
+  teamName?: Maybe<Scalars['String']>;
+  playerId1?: Maybe<Scalars['Int']>;
+  playerId3?: Maybe<Scalars['Int']>;
+  playerId4?: Maybe<Scalars['Int']>;
+  playerId5?: Maybe<Scalars['Int']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type PlayerHCreateOrConnectWithoutTeam1Input = {
+  where: PlayerHWhereUniqueInput;
+  create: PlayerHCreateWithoutTeam1Input;
+};
+
+export type TeamCreateOrConnectWithoutMatch1Input = {
+  where: TeamWhereUniqueInput;
+  create: TeamCreateWithoutMatch1Input;
+};
+
+export type MatchUpdateInput = {
+  matchResult?: Maybe<NullableIntFieldUpdateOperationsInput>;
+  screenshotPath?: Maybe<NullableStringFieldUpdateOperationsInput>;
+  map?: Maybe<NullableEnumMapFieldUpdateOperationsInput>;
   createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
   updatedAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
-  PlayerH?: Maybe<PlayerHUpdateManyWithoutPlayerInput>;
+  Team1?: Maybe<TeamUpdateOneWithoutMatch1Input>;
+  Team2?: Maybe<TeamUpdateOneWithoutMatch2Input>;
+};
+
+export type NullableIntFieldUpdateOperationsInput = {
+  set?: Maybe<Scalars['Int']>;
+  increment?: Maybe<Scalars['Int']>;
+  decrement?: Maybe<Scalars['Int']>;
+  multiply?: Maybe<Scalars['Int']>;
+  divide?: Maybe<Scalars['Int']>;
 };
 
 export type NullableStringFieldUpdateOperationsInput = {
   set?: Maybe<Scalars['String']>;
 };
 
-export type NullableFloatFieldUpdateOperationsInput = {
-  set?: Maybe<Scalars['Float']>;
-  increment?: Maybe<Scalars['Float']>;
-  decrement?: Maybe<Scalars['Float']>;
-  multiply?: Maybe<Scalars['Float']>;
-  divide?: Maybe<Scalars['Float']>;
+export type NullableEnumMapFieldUpdateOperationsInput = {
+  set?: Maybe<Map>;
 };
 
 export type DateTimeFieldUpdateOperationsInput = {
   set?: Maybe<Scalars['DateTime']>;
 };
 
-export type PlayerHUpdateManyWithoutPlayerInput = {
-  create?: Maybe<Array<PlayerHCreateWithoutPlayerInput>>;
-  connectOrCreate?: Maybe<Array<PlayerHCreateOrConnectWithoutPlayerInput>>;
-  upsert?: Maybe<Array<PlayerHUpsertWithWhereUniqueWithoutPlayerInput>>;
-  connect?: Maybe<Array<PlayerHWhereUniqueInput>>;
-  set?: Maybe<Array<PlayerHWhereUniqueInput>>;
-  disconnect?: Maybe<Array<PlayerHWhereUniqueInput>>;
-  delete?: Maybe<Array<PlayerHWhereUniqueInput>>;
-  update?: Maybe<Array<PlayerHUpdateWithWhereUniqueWithoutPlayerInput>>;
-  updateMany?: Maybe<Array<PlayerHUpdateManyWithWhereWithoutPlayerInput>>;
-  deleteMany?: Maybe<Array<PlayerHScalarWhereInput>>;
-};
-
-export type PlayerHUpsertWithWhereUniqueWithoutPlayerInput = {
-  where: PlayerHWhereUniqueInput;
-  update: PlayerHUpdateWithoutPlayerInput;
-  create: PlayerHCreateWithoutPlayerInput;
-};
-
-export type PlayerHUpdateWithoutPlayerInput = {
-  skillLevel?: Maybe<NullableFloatFieldUpdateOperationsInput>;
-  userTag?: Maybe<NullableStringFieldUpdateOperationsInput>;
-  createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
-  updatedAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
-  Team1?: Maybe<TeamUpdateManyWithoutPlayerH1Input>;
-  Team2?: Maybe<TeamUpdateManyWithoutPlayerH2Input>;
-  Team3?: Maybe<TeamUpdateManyWithoutPlayerH3Input>;
-  Team4?: Maybe<TeamUpdateManyWithoutPlayerH4Input>;
-  Team5?: Maybe<TeamUpdateManyWithoutPlayerH5Input>;
-};
-
-export type TeamUpdateManyWithoutPlayerH1Input = {
-  create?: Maybe<Array<TeamCreateWithoutPlayerH1Input>>;
-  connectOrCreate?: Maybe<Array<TeamCreateOrConnectWithoutPlayerH1Input>>;
-  upsert?: Maybe<Array<TeamUpsertWithWhereUniqueWithoutPlayerH1Input>>;
-  connect?: Maybe<Array<TeamWhereUniqueInput>>;
-  set?: Maybe<Array<TeamWhereUniqueInput>>;
-  disconnect?: Maybe<Array<TeamWhereUniqueInput>>;
-  delete?: Maybe<Array<TeamWhereUniqueInput>>;
-  update?: Maybe<Array<TeamUpdateWithWhereUniqueWithoutPlayerH1Input>>;
-  updateMany?: Maybe<Array<TeamUpdateManyWithWhereWithoutPlayerH1Input>>;
-  deleteMany?: Maybe<Array<TeamScalarWhereInput>>;
-};
-
-export type TeamUpsertWithWhereUniqueWithoutPlayerH1Input = {
-  where: TeamWhereUniqueInput;
-  update: TeamUpdateWithoutPlayerH1Input;
-  create: TeamCreateWithoutPlayerH1Input;
-};
-
-export type TeamUpdateWithoutPlayerH1Input = {
-  teamName?: Maybe<NullableStringFieldUpdateOperationsInput>;
-  createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
-  updatedAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
-  PlayerH2?: Maybe<PlayerHUpdateOneWithoutTeam2Input>;
-  PlayerH3?: Maybe<PlayerHUpdateOneWithoutTeam3Input>;
-  PlayerH4?: Maybe<PlayerHUpdateOneWithoutTeam4Input>;
-  PlayerH5?: Maybe<PlayerHUpdateOneWithoutTeam5Input>;
-  Match1?: Maybe<MatchUpdateManyWithoutTeam1Input>;
-  Match2?: Maybe<MatchUpdateManyWithoutTeam2Input>;
-};
-
-export type PlayerHUpdateOneWithoutTeam2Input = {
-  create?: Maybe<PlayerHCreateWithoutTeam2Input>;
-  connectOrCreate?: Maybe<PlayerHCreateOrConnectWithoutTeam2Input>;
-  upsert?: Maybe<PlayerHUpsertWithoutTeam2Input>;
-  connect?: Maybe<PlayerHWhereUniqueInput>;
+export type TeamUpdateOneWithoutMatch1Input = {
+  create?: Maybe<TeamCreateWithoutMatch1Input>;
+  connectOrCreate?: Maybe<TeamCreateOrConnectWithoutMatch1Input>;
+  upsert?: Maybe<TeamUpsertWithoutMatch1Input>;
+  connect?: Maybe<TeamWhereUniqueInput>;
   disconnect?: Maybe<Scalars['Boolean']>;
   delete?: Maybe<Scalars['Boolean']>;
-  update?: Maybe<PlayerHUpdateWithoutTeam2Input>;
+  update?: Maybe<TeamUpdateWithoutMatch1Input>;
 };
 
-export type PlayerHUpsertWithoutTeam2Input = {
-  update: PlayerHUpdateWithoutTeam2Input;
-  create: PlayerHCreateWithoutTeam2Input;
+export type TeamUpsertWithoutMatch1Input = {
+  update: TeamUpdateWithoutMatch1Input;
+  create: TeamCreateWithoutMatch1Input;
 };
 
-export type PlayerHUpdateWithoutTeam2Input = {
-  skillLevel?: Maybe<NullableFloatFieldUpdateOperationsInput>;
-  userTag?: Maybe<NullableStringFieldUpdateOperationsInput>;
-  createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
-  updatedAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
-  Player?: Maybe<PlayerUpdateOneWithoutPlayerHInput>;
-  Team1?: Maybe<TeamUpdateManyWithoutPlayerH1Input>;
-  Team3?: Maybe<TeamUpdateManyWithoutPlayerH3Input>;
-  Team4?: Maybe<TeamUpdateManyWithoutPlayerH4Input>;
-  Team5?: Maybe<TeamUpdateManyWithoutPlayerH5Input>;
-};
-
-export type PlayerUpdateOneWithoutPlayerHInput = {
-  create?: Maybe<PlayerCreateWithoutPlayerHInput>;
-  connectOrCreate?: Maybe<PlayerCreateOrConnectWithoutPlayerHInput>;
-  upsert?: Maybe<PlayerUpsertWithoutPlayerHInput>;
-  connect?: Maybe<PlayerWhereUniqueInput>;
-  disconnect?: Maybe<Scalars['Boolean']>;
-  delete?: Maybe<Scalars['Boolean']>;
-  update?: Maybe<PlayerUpdateWithoutPlayerHInput>;
-};
-
-export type PlayerUpsertWithoutPlayerHInput = {
-  update: PlayerUpdateWithoutPlayerHInput;
-  create: PlayerCreateWithoutPlayerHInput;
-};
-
-export type PlayerUpdateWithoutPlayerHInput = {
-  userId?: Maybe<NullableStringFieldUpdateOperationsInput>;
-  skillLevel?: Maybe<NullableFloatFieldUpdateOperationsInput>;
-  userTag?: Maybe<NullableStringFieldUpdateOperationsInput>;
-  createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
-  updatedAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
-};
-
-export type TeamUpdateManyWithoutPlayerH3Input = {
-  create?: Maybe<Array<TeamCreateWithoutPlayerH3Input>>;
-  connectOrCreate?: Maybe<Array<TeamCreateOrConnectWithoutPlayerH3Input>>;
-  upsert?: Maybe<Array<TeamUpsertWithWhereUniqueWithoutPlayerH3Input>>;
-  connect?: Maybe<Array<TeamWhereUniqueInput>>;
-  set?: Maybe<Array<TeamWhereUniqueInput>>;
-  disconnect?: Maybe<Array<TeamWhereUniqueInput>>;
-  delete?: Maybe<Array<TeamWhereUniqueInput>>;
-  update?: Maybe<Array<TeamUpdateWithWhereUniqueWithoutPlayerH3Input>>;
-  updateMany?: Maybe<Array<TeamUpdateManyWithWhereWithoutPlayerH3Input>>;
-  deleteMany?: Maybe<Array<TeamScalarWhereInput>>;
-};
-
-export type TeamUpsertWithWhereUniqueWithoutPlayerH3Input = {
-  where: TeamWhereUniqueInput;
-  update: TeamUpdateWithoutPlayerH3Input;
-  create: TeamCreateWithoutPlayerH3Input;
-};
-
-export type TeamUpdateWithoutPlayerH3Input = {
+export type TeamUpdateWithoutMatch1Input = {
   teamName?: Maybe<NullableStringFieldUpdateOperationsInput>;
   createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
   updatedAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
   PlayerH1?: Maybe<PlayerHUpdateOneWithoutTeam1Input>;
   PlayerH2?: Maybe<PlayerHUpdateOneWithoutTeam2Input>;
+  PlayerH3?: Maybe<PlayerHUpdateOneWithoutTeam3Input>;
   PlayerH4?: Maybe<PlayerHUpdateOneWithoutTeam4Input>;
   PlayerH5?: Maybe<PlayerHUpdateOneWithoutTeam5Input>;
-  Match1?: Maybe<MatchUpdateManyWithoutTeam1Input>;
   Match2?: Maybe<MatchUpdateManyWithoutTeam2Input>;
 };
 
@@ -1214,10 +1277,44 @@ export type PlayerHUpdateWithoutTeam1Input = {
   Team5?: Maybe<TeamUpdateManyWithoutPlayerH5Input>;
 };
 
+export type NullableFloatFieldUpdateOperationsInput = {
+  set?: Maybe<Scalars['Float']>;
+  increment?: Maybe<Scalars['Float']>;
+  decrement?: Maybe<Scalars['Float']>;
+  multiply?: Maybe<Scalars['Float']>;
+  divide?: Maybe<Scalars['Float']>;
+};
+
+export type PlayerUpdateOneWithoutPlayerHInput = {
+  create?: Maybe<PlayerCreateWithoutPlayerHInput>;
+  connectOrCreate?: Maybe<PlayerCreateOrConnectWithoutPlayerHInput>;
+  upsert?: Maybe<PlayerUpsertWithoutPlayerHInput>;
+  connect?: Maybe<PlayerWhereUniqueInput>;
+  disconnect?: Maybe<Scalars['Boolean']>;
+  delete?: Maybe<Scalars['Boolean']>;
+  update?: Maybe<PlayerUpdateWithoutPlayerHInput>;
+};
+
+export type PlayerUpsertWithoutPlayerHInput = {
+  update: PlayerUpdateWithoutPlayerHInput;
+  create: PlayerCreateWithoutPlayerHInput;
+};
+
+export type PlayerUpdateWithoutPlayerHInput = {
+  userId?: Maybe<NullableStringFieldUpdateOperationsInput>;
+  skillLevel?: Maybe<NullableFloatFieldUpdateOperationsInput>;
+  userTag?: Maybe<NullableStringFieldUpdateOperationsInput>;
+  favoriteMap?: Maybe<NullableEnumMapFieldUpdateOperationsInput>;
+  imageUrl?: Maybe<NullableStringFieldUpdateOperationsInput>;
+  createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
+  updatedAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
+};
+
 export type TeamUpdateManyWithoutPlayerH2Input = {
   create?: Maybe<Array<TeamCreateWithoutPlayerH2Input>>;
   connectOrCreate?: Maybe<Array<TeamCreateOrConnectWithoutPlayerH2Input>>;
   upsert?: Maybe<Array<TeamUpsertWithWhereUniqueWithoutPlayerH2Input>>;
+  createMany?: Maybe<TeamCreateManyPlayerH2InputEnvelope>;
   connect?: Maybe<Array<TeamWhereUniqueInput>>;
   set?: Maybe<Array<TeamWhereUniqueInput>>;
   disconnect?: Maybe<Array<TeamWhereUniqueInput>>;
@@ -1272,124 +1369,95 @@ export type PlayerHUpdateWithoutTeam3Input = {
   Team5?: Maybe<TeamUpdateManyWithoutPlayerH5Input>;
 };
 
-export type TeamUpdateManyWithoutPlayerH4Input = {
-  create?: Maybe<Array<TeamCreateWithoutPlayerH4Input>>;
-  connectOrCreate?: Maybe<Array<TeamCreateOrConnectWithoutPlayerH4Input>>;
-  upsert?: Maybe<Array<TeamUpsertWithWhereUniqueWithoutPlayerH4Input>>;
+export type TeamUpdateManyWithoutPlayerH1Input = {
+  create?: Maybe<Array<TeamCreateWithoutPlayerH1Input>>;
+  connectOrCreate?: Maybe<Array<TeamCreateOrConnectWithoutPlayerH1Input>>;
+  upsert?: Maybe<Array<TeamUpsertWithWhereUniqueWithoutPlayerH1Input>>;
+  createMany?: Maybe<TeamCreateManyPlayerH1InputEnvelope>;
   connect?: Maybe<Array<TeamWhereUniqueInput>>;
   set?: Maybe<Array<TeamWhereUniqueInput>>;
   disconnect?: Maybe<Array<TeamWhereUniqueInput>>;
   delete?: Maybe<Array<TeamWhereUniqueInput>>;
-  update?: Maybe<Array<TeamUpdateWithWhereUniqueWithoutPlayerH4Input>>;
-  updateMany?: Maybe<Array<TeamUpdateManyWithWhereWithoutPlayerH4Input>>;
+  update?: Maybe<Array<TeamUpdateWithWhereUniqueWithoutPlayerH1Input>>;
+  updateMany?: Maybe<Array<TeamUpdateManyWithWhereWithoutPlayerH1Input>>;
   deleteMany?: Maybe<Array<TeamScalarWhereInput>>;
 };
 
-export type TeamUpsertWithWhereUniqueWithoutPlayerH4Input = {
+export type TeamUpsertWithWhereUniqueWithoutPlayerH1Input = {
   where: TeamWhereUniqueInput;
-  update: TeamUpdateWithoutPlayerH4Input;
-  create: TeamCreateWithoutPlayerH4Input;
+  update: TeamUpdateWithoutPlayerH1Input;
+  create: TeamCreateWithoutPlayerH1Input;
 };
 
-export type TeamUpdateWithoutPlayerH4Input = {
+export type TeamUpdateWithoutPlayerH1Input = {
   teamName?: Maybe<NullableStringFieldUpdateOperationsInput>;
   createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
   updatedAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
-  PlayerH1?: Maybe<PlayerHUpdateOneWithoutTeam1Input>;
   PlayerH2?: Maybe<PlayerHUpdateOneWithoutTeam2Input>;
   PlayerH3?: Maybe<PlayerHUpdateOneWithoutTeam3Input>;
+  PlayerH4?: Maybe<PlayerHUpdateOneWithoutTeam4Input>;
   PlayerH5?: Maybe<PlayerHUpdateOneWithoutTeam5Input>;
   Match1?: Maybe<MatchUpdateManyWithoutTeam1Input>;
   Match2?: Maybe<MatchUpdateManyWithoutTeam2Input>;
 };
 
-export type PlayerHUpdateOneWithoutTeam5Input = {
-  create?: Maybe<PlayerHCreateWithoutTeam5Input>;
-  connectOrCreate?: Maybe<PlayerHCreateOrConnectWithoutTeam5Input>;
-  upsert?: Maybe<PlayerHUpsertWithoutTeam5Input>;
+export type PlayerHUpdateOneWithoutTeam2Input = {
+  create?: Maybe<PlayerHCreateWithoutTeam2Input>;
+  connectOrCreate?: Maybe<PlayerHCreateOrConnectWithoutTeam2Input>;
+  upsert?: Maybe<PlayerHUpsertWithoutTeam2Input>;
   connect?: Maybe<PlayerHWhereUniqueInput>;
   disconnect?: Maybe<Scalars['Boolean']>;
   delete?: Maybe<Scalars['Boolean']>;
-  update?: Maybe<PlayerHUpdateWithoutTeam5Input>;
+  update?: Maybe<PlayerHUpdateWithoutTeam2Input>;
 };
 
-export type PlayerHUpsertWithoutTeam5Input = {
-  update: PlayerHUpdateWithoutTeam5Input;
-  create: PlayerHCreateWithoutTeam5Input;
+export type PlayerHUpsertWithoutTeam2Input = {
+  update: PlayerHUpdateWithoutTeam2Input;
+  create: PlayerHCreateWithoutTeam2Input;
 };
 
-export type PlayerHUpdateWithoutTeam5Input = {
+export type PlayerHUpdateWithoutTeam2Input = {
   skillLevel?: Maybe<NullableFloatFieldUpdateOperationsInput>;
   userTag?: Maybe<NullableStringFieldUpdateOperationsInput>;
   createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
   updatedAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
   Player?: Maybe<PlayerUpdateOneWithoutPlayerHInput>;
   Team1?: Maybe<TeamUpdateManyWithoutPlayerH1Input>;
-  Team2?: Maybe<TeamUpdateManyWithoutPlayerH2Input>;
   Team3?: Maybe<TeamUpdateManyWithoutPlayerH3Input>;
   Team4?: Maybe<TeamUpdateManyWithoutPlayerH4Input>;
+  Team5?: Maybe<TeamUpdateManyWithoutPlayerH5Input>;
 };
 
-export type MatchUpdateManyWithoutTeam1Input = {
-  create?: Maybe<Array<MatchCreateWithoutTeam1Input>>;
-  connectOrCreate?: Maybe<Array<MatchCreateOrConnectWithoutTeam1Input>>;
-  upsert?: Maybe<Array<MatchUpsertWithWhereUniqueWithoutTeam1Input>>;
-  connect?: Maybe<Array<MatchWhereUniqueInput>>;
-  set?: Maybe<Array<MatchWhereUniqueInput>>;
-  disconnect?: Maybe<Array<MatchWhereUniqueInput>>;
-  delete?: Maybe<Array<MatchWhereUniqueInput>>;
-  update?: Maybe<Array<MatchUpdateWithWhereUniqueWithoutTeam1Input>>;
-  updateMany?: Maybe<Array<MatchUpdateManyWithWhereWithoutTeam1Input>>;
-  deleteMany?: Maybe<Array<MatchScalarWhereInput>>;
+export type TeamUpdateManyWithoutPlayerH3Input = {
+  create?: Maybe<Array<TeamCreateWithoutPlayerH3Input>>;
+  connectOrCreate?: Maybe<Array<TeamCreateOrConnectWithoutPlayerH3Input>>;
+  upsert?: Maybe<Array<TeamUpsertWithWhereUniqueWithoutPlayerH3Input>>;
+  createMany?: Maybe<TeamCreateManyPlayerH3InputEnvelope>;
+  connect?: Maybe<Array<TeamWhereUniqueInput>>;
+  set?: Maybe<Array<TeamWhereUniqueInput>>;
+  disconnect?: Maybe<Array<TeamWhereUniqueInput>>;
+  delete?: Maybe<Array<TeamWhereUniqueInput>>;
+  update?: Maybe<Array<TeamUpdateWithWhereUniqueWithoutPlayerH3Input>>;
+  updateMany?: Maybe<Array<TeamUpdateManyWithWhereWithoutPlayerH3Input>>;
+  deleteMany?: Maybe<Array<TeamScalarWhereInput>>;
 };
 
-export type MatchUpsertWithWhereUniqueWithoutTeam1Input = {
-  where: MatchWhereUniqueInput;
-  update: MatchUpdateWithoutTeam1Input;
-  create: MatchCreateWithoutTeam1Input;
+export type TeamUpsertWithWhereUniqueWithoutPlayerH3Input = {
+  where: TeamWhereUniqueInput;
+  update: TeamUpdateWithoutPlayerH3Input;
+  create: TeamCreateWithoutPlayerH3Input;
 };
 
-export type MatchUpdateWithoutTeam1Input = {
-  matchResult?: Maybe<NullableIntFieldUpdateOperationsInput>;
-  screenshotPath?: Maybe<NullableStringFieldUpdateOperationsInput>;
-  createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
-  updatedAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
-  Team2?: Maybe<TeamUpdateOneWithoutMatch2Input>;
-};
-
-export type NullableIntFieldUpdateOperationsInput = {
-  set?: Maybe<Scalars['Int']>;
-  increment?: Maybe<Scalars['Int']>;
-  decrement?: Maybe<Scalars['Int']>;
-  multiply?: Maybe<Scalars['Int']>;
-  divide?: Maybe<Scalars['Int']>;
-};
-
-export type TeamUpdateOneWithoutMatch2Input = {
-  create?: Maybe<TeamCreateWithoutMatch2Input>;
-  connectOrCreate?: Maybe<TeamCreateOrConnectWithoutMatch2Input>;
-  upsert?: Maybe<TeamUpsertWithoutMatch2Input>;
-  connect?: Maybe<TeamWhereUniqueInput>;
-  disconnect?: Maybe<Scalars['Boolean']>;
-  delete?: Maybe<Scalars['Boolean']>;
-  update?: Maybe<TeamUpdateWithoutMatch2Input>;
-};
-
-export type TeamUpsertWithoutMatch2Input = {
-  update: TeamUpdateWithoutMatch2Input;
-  create: TeamCreateWithoutMatch2Input;
-};
-
-export type TeamUpdateWithoutMatch2Input = {
+export type TeamUpdateWithoutPlayerH3Input = {
   teamName?: Maybe<NullableStringFieldUpdateOperationsInput>;
   createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
   updatedAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
   PlayerH1?: Maybe<PlayerHUpdateOneWithoutTeam1Input>;
   PlayerH2?: Maybe<PlayerHUpdateOneWithoutTeam2Input>;
-  PlayerH3?: Maybe<PlayerHUpdateOneWithoutTeam3Input>;
   PlayerH4?: Maybe<PlayerHUpdateOneWithoutTeam4Input>;
   PlayerH5?: Maybe<PlayerHUpdateOneWithoutTeam5Input>;
   Match1?: Maybe<MatchUpdateManyWithoutTeam1Input>;
+  Match2?: Maybe<MatchUpdateManyWithoutTeam2Input>;
 };
 
 export type PlayerHUpdateOneWithoutTeam4Input = {
@@ -1423,6 +1491,7 @@ export type TeamUpdateManyWithoutPlayerH5Input = {
   create?: Maybe<Array<TeamCreateWithoutPlayerH5Input>>;
   connectOrCreate?: Maybe<Array<TeamCreateOrConnectWithoutPlayerH5Input>>;
   upsert?: Maybe<Array<TeamUpsertWithWhereUniqueWithoutPlayerH5Input>>;
+  createMany?: Maybe<TeamCreateManyPlayerH5InputEnvelope>;
   connect?: Maybe<Array<TeamWhereUniqueInput>>;
   set?: Maybe<Array<TeamWhereUniqueInput>>;
   disconnect?: Maybe<Array<TeamWhereUniqueInput>>;
@@ -1450,10 +1519,126 @@ export type TeamUpdateWithoutPlayerH5Input = {
   Match2?: Maybe<MatchUpdateManyWithoutTeam2Input>;
 };
 
+export type MatchUpdateManyWithoutTeam1Input = {
+  create?: Maybe<Array<MatchCreateWithoutTeam1Input>>;
+  connectOrCreate?: Maybe<Array<MatchCreateOrConnectWithoutTeam1Input>>;
+  upsert?: Maybe<Array<MatchUpsertWithWhereUniqueWithoutTeam1Input>>;
+  createMany?: Maybe<MatchCreateManyTeam1InputEnvelope>;
+  connect?: Maybe<Array<MatchWhereUniqueInput>>;
+  set?: Maybe<Array<MatchWhereUniqueInput>>;
+  disconnect?: Maybe<Array<MatchWhereUniqueInput>>;
+  delete?: Maybe<Array<MatchWhereUniqueInput>>;
+  update?: Maybe<Array<MatchUpdateWithWhereUniqueWithoutTeam1Input>>;
+  updateMany?: Maybe<Array<MatchUpdateManyWithWhereWithoutTeam1Input>>;
+  deleteMany?: Maybe<Array<MatchScalarWhereInput>>;
+};
+
+export type MatchUpsertWithWhereUniqueWithoutTeam1Input = {
+  where: MatchWhereUniqueInput;
+  update: MatchUpdateWithoutTeam1Input;
+  create: MatchCreateWithoutTeam1Input;
+};
+
+export type MatchUpdateWithoutTeam1Input = {
+  matchResult?: Maybe<NullableIntFieldUpdateOperationsInput>;
+  screenshotPath?: Maybe<NullableStringFieldUpdateOperationsInput>;
+  map?: Maybe<NullableEnumMapFieldUpdateOperationsInput>;
+  createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
+  updatedAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
+  Team2?: Maybe<TeamUpdateOneWithoutMatch2Input>;
+};
+
+export type TeamUpdateOneWithoutMatch2Input = {
+  create?: Maybe<TeamCreateWithoutMatch2Input>;
+  connectOrCreate?: Maybe<TeamCreateOrConnectWithoutMatch2Input>;
+  upsert?: Maybe<TeamUpsertWithoutMatch2Input>;
+  connect?: Maybe<TeamWhereUniqueInput>;
+  disconnect?: Maybe<Scalars['Boolean']>;
+  delete?: Maybe<Scalars['Boolean']>;
+  update?: Maybe<TeamUpdateWithoutMatch2Input>;
+};
+
+export type TeamUpsertWithoutMatch2Input = {
+  update: TeamUpdateWithoutMatch2Input;
+  create: TeamCreateWithoutMatch2Input;
+};
+
+export type TeamUpdateWithoutMatch2Input = {
+  teamName?: Maybe<NullableStringFieldUpdateOperationsInput>;
+  createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
+  updatedAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
+  PlayerH1?: Maybe<PlayerHUpdateOneWithoutTeam1Input>;
+  PlayerH2?: Maybe<PlayerHUpdateOneWithoutTeam2Input>;
+  PlayerH3?: Maybe<PlayerHUpdateOneWithoutTeam3Input>;
+  PlayerH4?: Maybe<PlayerHUpdateOneWithoutTeam4Input>;
+  PlayerH5?: Maybe<PlayerHUpdateOneWithoutTeam5Input>;
+  Match1?: Maybe<MatchUpdateManyWithoutTeam1Input>;
+};
+
+export type PlayerHUpdateOneWithoutTeam5Input = {
+  create?: Maybe<PlayerHCreateWithoutTeam5Input>;
+  connectOrCreate?: Maybe<PlayerHCreateOrConnectWithoutTeam5Input>;
+  upsert?: Maybe<PlayerHUpsertWithoutTeam5Input>;
+  connect?: Maybe<PlayerHWhereUniqueInput>;
+  disconnect?: Maybe<Scalars['Boolean']>;
+  delete?: Maybe<Scalars['Boolean']>;
+  update?: Maybe<PlayerHUpdateWithoutTeam5Input>;
+};
+
+export type PlayerHUpsertWithoutTeam5Input = {
+  update: PlayerHUpdateWithoutTeam5Input;
+  create: PlayerHCreateWithoutTeam5Input;
+};
+
+export type PlayerHUpdateWithoutTeam5Input = {
+  skillLevel?: Maybe<NullableFloatFieldUpdateOperationsInput>;
+  userTag?: Maybe<NullableStringFieldUpdateOperationsInput>;
+  createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
+  updatedAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
+  Player?: Maybe<PlayerUpdateOneWithoutPlayerHInput>;
+  Team1?: Maybe<TeamUpdateManyWithoutPlayerH1Input>;
+  Team2?: Maybe<TeamUpdateManyWithoutPlayerH2Input>;
+  Team3?: Maybe<TeamUpdateManyWithoutPlayerH3Input>;
+  Team4?: Maybe<TeamUpdateManyWithoutPlayerH4Input>;
+};
+
+export type TeamUpdateManyWithoutPlayerH4Input = {
+  create?: Maybe<Array<TeamCreateWithoutPlayerH4Input>>;
+  connectOrCreate?: Maybe<Array<TeamCreateOrConnectWithoutPlayerH4Input>>;
+  upsert?: Maybe<Array<TeamUpsertWithWhereUniqueWithoutPlayerH4Input>>;
+  createMany?: Maybe<TeamCreateManyPlayerH4InputEnvelope>;
+  connect?: Maybe<Array<TeamWhereUniqueInput>>;
+  set?: Maybe<Array<TeamWhereUniqueInput>>;
+  disconnect?: Maybe<Array<TeamWhereUniqueInput>>;
+  delete?: Maybe<Array<TeamWhereUniqueInput>>;
+  update?: Maybe<Array<TeamUpdateWithWhereUniqueWithoutPlayerH4Input>>;
+  updateMany?: Maybe<Array<TeamUpdateManyWithWhereWithoutPlayerH4Input>>;
+  deleteMany?: Maybe<Array<TeamScalarWhereInput>>;
+};
+
+export type TeamUpsertWithWhereUniqueWithoutPlayerH4Input = {
+  where: TeamWhereUniqueInput;
+  update: TeamUpdateWithoutPlayerH4Input;
+  create: TeamCreateWithoutPlayerH4Input;
+};
+
+export type TeamUpdateWithoutPlayerH4Input = {
+  teamName?: Maybe<NullableStringFieldUpdateOperationsInput>;
+  createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
+  updatedAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
+  PlayerH1?: Maybe<PlayerHUpdateOneWithoutTeam1Input>;
+  PlayerH2?: Maybe<PlayerHUpdateOneWithoutTeam2Input>;
+  PlayerH3?: Maybe<PlayerHUpdateOneWithoutTeam3Input>;
+  PlayerH5?: Maybe<PlayerHUpdateOneWithoutTeam5Input>;
+  Match1?: Maybe<MatchUpdateManyWithoutTeam1Input>;
+  Match2?: Maybe<MatchUpdateManyWithoutTeam2Input>;
+};
+
 export type MatchUpdateManyWithoutTeam2Input = {
   create?: Maybe<Array<MatchCreateWithoutTeam2Input>>;
   connectOrCreate?: Maybe<Array<MatchCreateOrConnectWithoutTeam2Input>>;
   upsert?: Maybe<Array<MatchUpsertWithWhereUniqueWithoutTeam2Input>>;
+  createMany?: Maybe<MatchCreateManyTeam2InputEnvelope>;
   connect?: Maybe<Array<MatchWhereUniqueInput>>;
   set?: Maybe<Array<MatchWhereUniqueInput>>;
   disconnect?: Maybe<Array<MatchWhereUniqueInput>>;
@@ -1472,36 +1657,10 @@ export type MatchUpsertWithWhereUniqueWithoutTeam2Input = {
 export type MatchUpdateWithoutTeam2Input = {
   matchResult?: Maybe<NullableIntFieldUpdateOperationsInput>;
   screenshotPath?: Maybe<NullableStringFieldUpdateOperationsInput>;
+  map?: Maybe<NullableEnumMapFieldUpdateOperationsInput>;
   createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
   updatedAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
   Team1?: Maybe<TeamUpdateOneWithoutMatch1Input>;
-};
-
-export type TeamUpdateOneWithoutMatch1Input = {
-  create?: Maybe<TeamCreateWithoutMatch1Input>;
-  connectOrCreate?: Maybe<TeamCreateOrConnectWithoutMatch1Input>;
-  upsert?: Maybe<TeamUpsertWithoutMatch1Input>;
-  connect?: Maybe<TeamWhereUniqueInput>;
-  disconnect?: Maybe<Scalars['Boolean']>;
-  delete?: Maybe<Scalars['Boolean']>;
-  update?: Maybe<TeamUpdateWithoutMatch1Input>;
-};
-
-export type TeamUpsertWithoutMatch1Input = {
-  update: TeamUpdateWithoutMatch1Input;
-  create: TeamCreateWithoutMatch1Input;
-};
-
-export type TeamUpdateWithoutMatch1Input = {
-  teamName?: Maybe<NullableStringFieldUpdateOperationsInput>;
-  createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
-  updatedAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
-  PlayerH1?: Maybe<PlayerHUpdateOneWithoutTeam1Input>;
-  PlayerH2?: Maybe<PlayerHUpdateOneWithoutTeam2Input>;
-  PlayerH3?: Maybe<PlayerHUpdateOneWithoutTeam3Input>;
-  PlayerH4?: Maybe<PlayerHUpdateOneWithoutTeam4Input>;
-  PlayerH5?: Maybe<PlayerHUpdateOneWithoutTeam5Input>;
-  Match2?: Maybe<MatchUpdateManyWithoutTeam2Input>;
 };
 
 export type MatchUpdateWithWhereUniqueWithoutTeam2Input = {
@@ -1521,6 +1680,7 @@ export type MatchScalarWhereInput = {
   id?: Maybe<IntFilter>;
   matchResult?: Maybe<IntNullableFilter>;
   screenshotPath?: Maybe<StringNullableFilter>;
+  map?: Maybe<EnumMapNullableFilter>;
   teamId1?: Maybe<IntNullableFilter>;
   teamId2?: Maybe<IntNullableFilter>;
   createdAt?: Maybe<DateTimeFilter>;
@@ -1530,16 +1690,17 @@ export type MatchScalarWhereInput = {
 export type MatchUpdateManyMutationInput = {
   matchResult?: Maybe<NullableIntFieldUpdateOperationsInput>;
   screenshotPath?: Maybe<NullableStringFieldUpdateOperationsInput>;
+  map?: Maybe<NullableEnumMapFieldUpdateOperationsInput>;
   createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
   updatedAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
 };
 
-export type TeamUpdateWithWhereUniqueWithoutPlayerH5Input = {
+export type TeamUpdateWithWhereUniqueWithoutPlayerH4Input = {
   where: TeamWhereUniqueInput;
-  data: TeamUpdateWithoutPlayerH5Input;
+  data: TeamUpdateWithoutPlayerH4Input;
 };
 
-export type TeamUpdateManyWithWhereWithoutPlayerH5Input = {
+export type TeamUpdateManyWithWhereWithoutPlayerH4Input = {
   where: TeamScalarWhereInput;
   data: TeamUpdateManyMutationInput;
 };
@@ -1575,22 +1736,12 @@ export type MatchUpdateManyWithWhereWithoutTeam1Input = {
   data: MatchUpdateManyMutationInput;
 };
 
-export type TeamUpdateWithWhereUniqueWithoutPlayerH4Input = {
+export type TeamUpdateWithWhereUniqueWithoutPlayerH5Input = {
   where: TeamWhereUniqueInput;
-  data: TeamUpdateWithoutPlayerH4Input;
+  data: TeamUpdateWithoutPlayerH5Input;
 };
 
-export type TeamUpdateManyWithWhereWithoutPlayerH4Input = {
-  where: TeamScalarWhereInput;
-  data: TeamUpdateManyMutationInput;
-};
-
-export type TeamUpdateWithWhereUniqueWithoutPlayerH2Input = {
-  where: TeamWhereUniqueInput;
-  data: TeamUpdateWithoutPlayerH2Input;
-};
-
-export type TeamUpdateManyWithWhereWithoutPlayerH2Input = {
+export type TeamUpdateManyWithWhereWithoutPlayerH5Input = {
   where: TeamScalarWhereInput;
   data: TeamUpdateManyMutationInput;
 };
@@ -1613,6 +1764,107 @@ export type TeamUpdateWithWhereUniqueWithoutPlayerH1Input = {
 export type TeamUpdateManyWithWhereWithoutPlayerH1Input = {
   where: TeamScalarWhereInput;
   data: TeamUpdateManyMutationInput;
+};
+
+export type TeamUpdateWithWhereUniqueWithoutPlayerH2Input = {
+  where: TeamWhereUniqueInput;
+  data: TeamUpdateWithoutPlayerH2Input;
+};
+
+export type TeamUpdateManyWithWhereWithoutPlayerH2Input = {
+  where: TeamScalarWhereInput;
+  data: TeamUpdateManyMutationInput;
+};
+
+export type PlayerCreateInput = {
+  userId?: Maybe<Scalars['String']>;
+  skillLevel?: Maybe<Scalars['Float']>;
+  userTag?: Maybe<Scalars['String']>;
+  favoriteMap?: Maybe<Map>;
+  imageUrl?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  PlayerH?: Maybe<PlayerHCreateNestedManyWithoutPlayerInput>;
+};
+
+export type PlayerHCreateNestedManyWithoutPlayerInput = {
+  create?: Maybe<Array<PlayerHCreateWithoutPlayerInput>>;
+  connectOrCreate?: Maybe<Array<PlayerHCreateOrConnectWithoutPlayerInput>>;
+  createMany?: Maybe<PlayerHCreateManyPlayerInputEnvelope>;
+  connect?: Maybe<Array<PlayerHWhereUniqueInput>>;
+};
+
+export type PlayerHCreateWithoutPlayerInput = {
+  skillLevel?: Maybe<Scalars['Float']>;
+  userTag?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  Team1?: Maybe<TeamCreateNestedManyWithoutPlayerH1Input>;
+  Team2?: Maybe<TeamCreateNestedManyWithoutPlayerH2Input>;
+  Team3?: Maybe<TeamCreateNestedManyWithoutPlayerH3Input>;
+  Team4?: Maybe<TeamCreateNestedManyWithoutPlayerH4Input>;
+  Team5?: Maybe<TeamCreateNestedManyWithoutPlayerH5Input>;
+};
+
+export type PlayerHCreateOrConnectWithoutPlayerInput = {
+  where: PlayerHWhereUniqueInput;
+  create: PlayerHCreateWithoutPlayerInput;
+};
+
+export type PlayerHCreateManyPlayerInputEnvelope = {
+  data: Array<PlayerHCreateManyPlayerInput>;
+  skipDuplicates?: Maybe<Scalars['Boolean']>;
+};
+
+export type PlayerHCreateManyPlayerInput = {
+  id?: Maybe<Scalars['Int']>;
+  skillLevel?: Maybe<Scalars['Float']>;
+  userTag?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type PlayerUpdateInput = {
+  userId?: Maybe<NullableStringFieldUpdateOperationsInput>;
+  skillLevel?: Maybe<NullableFloatFieldUpdateOperationsInput>;
+  userTag?: Maybe<NullableStringFieldUpdateOperationsInput>;
+  favoriteMap?: Maybe<NullableEnumMapFieldUpdateOperationsInput>;
+  imageUrl?: Maybe<NullableStringFieldUpdateOperationsInput>;
+  createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
+  updatedAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
+  PlayerH?: Maybe<PlayerHUpdateManyWithoutPlayerInput>;
+};
+
+export type PlayerHUpdateManyWithoutPlayerInput = {
+  create?: Maybe<Array<PlayerHCreateWithoutPlayerInput>>;
+  connectOrCreate?: Maybe<Array<PlayerHCreateOrConnectWithoutPlayerInput>>;
+  upsert?: Maybe<Array<PlayerHUpsertWithWhereUniqueWithoutPlayerInput>>;
+  createMany?: Maybe<PlayerHCreateManyPlayerInputEnvelope>;
+  connect?: Maybe<Array<PlayerHWhereUniqueInput>>;
+  set?: Maybe<Array<PlayerHWhereUniqueInput>>;
+  disconnect?: Maybe<Array<PlayerHWhereUniqueInput>>;
+  delete?: Maybe<Array<PlayerHWhereUniqueInput>>;
+  update?: Maybe<Array<PlayerHUpdateWithWhereUniqueWithoutPlayerInput>>;
+  updateMany?: Maybe<Array<PlayerHUpdateManyWithWhereWithoutPlayerInput>>;
+  deleteMany?: Maybe<Array<PlayerHScalarWhereInput>>;
+};
+
+export type PlayerHUpsertWithWhereUniqueWithoutPlayerInput = {
+  where: PlayerHWhereUniqueInput;
+  update: PlayerHUpdateWithoutPlayerInput;
+  create: PlayerHCreateWithoutPlayerInput;
+};
+
+export type PlayerHUpdateWithoutPlayerInput = {
+  skillLevel?: Maybe<NullableFloatFieldUpdateOperationsInput>;
+  userTag?: Maybe<NullableStringFieldUpdateOperationsInput>;
+  createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
+  updatedAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
+  Team1?: Maybe<TeamUpdateManyWithoutPlayerH1Input>;
+  Team2?: Maybe<TeamUpdateManyWithoutPlayerH2Input>;
+  Team3?: Maybe<TeamUpdateManyWithoutPlayerH3Input>;
+  Team4?: Maybe<TeamUpdateManyWithoutPlayerH4Input>;
+  Team5?: Maybe<TeamUpdateManyWithoutPlayerH5Input>;
 };
 
 export type PlayerHUpdateWithWhereUniqueWithoutPlayerInput = {
@@ -1642,6 +1894,45 @@ export type PlayerHUpdateManyMutationInput = {
   userTag?: Maybe<NullableStringFieldUpdateOperationsInput>;
   createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
   updatedAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
+};
+
+export type PlayerHUpdateInput = {
+  skillLevel?: Maybe<NullableFloatFieldUpdateOperationsInput>;
+  userTag?: Maybe<NullableStringFieldUpdateOperationsInput>;
+  createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
+  updatedAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
+  Player?: Maybe<PlayerUpdateOneWithoutPlayerHInput>;
+  Team1?: Maybe<TeamUpdateManyWithoutPlayerH1Input>;
+  Team2?: Maybe<TeamUpdateManyWithoutPlayerH2Input>;
+  Team3?: Maybe<TeamUpdateManyWithoutPlayerH3Input>;
+  Team4?: Maybe<TeamUpdateManyWithoutPlayerH4Input>;
+  Team5?: Maybe<TeamUpdateManyWithoutPlayerH5Input>;
+};
+
+export type TeamCreateInput = {
+  teamName?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  PlayerH1?: Maybe<PlayerHCreateNestedOneWithoutTeam1Input>;
+  PlayerH2?: Maybe<PlayerHCreateNestedOneWithoutTeam2Input>;
+  PlayerH3?: Maybe<PlayerHCreateNestedOneWithoutTeam3Input>;
+  PlayerH4?: Maybe<PlayerHCreateNestedOneWithoutTeam4Input>;
+  PlayerH5?: Maybe<PlayerHCreateNestedOneWithoutTeam5Input>;
+  Match1?: Maybe<MatchCreateNestedManyWithoutTeam1Input>;
+  Match2?: Maybe<MatchCreateNestedManyWithoutTeam2Input>;
+};
+
+export type TeamUpdateInput = {
+  teamName?: Maybe<NullableStringFieldUpdateOperationsInput>;
+  createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
+  updatedAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
+  PlayerH1?: Maybe<PlayerHUpdateOneWithoutTeam1Input>;
+  PlayerH2?: Maybe<PlayerHUpdateOneWithoutTeam2Input>;
+  PlayerH3?: Maybe<PlayerHUpdateOneWithoutTeam3Input>;
+  PlayerH4?: Maybe<PlayerHUpdateOneWithoutTeam4Input>;
+  PlayerH5?: Maybe<PlayerHUpdateOneWithoutTeam5Input>;
+  Match1?: Maybe<MatchUpdateManyWithoutTeam1Input>;
+  Match2?: Maybe<MatchUpdateManyWithoutTeam2Input>;
 };
 
 export type GetAlinaStatsQueryVariables = Exact<{
