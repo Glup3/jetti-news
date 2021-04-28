@@ -2143,7 +2143,7 @@ export type GetWrQuery = (
     )> }
   ), player?: Maybe<(
     { __typename?: 'Player' }
-    & Pick<Player, 'id' | 'skillLevel' | 'createdAt'>
+    & Pick<Player, 'id' | 'skillLevel' | 'favoriteMap' | 'imageUrl' | 'createdAt'>
   )> }
 );
 
@@ -2547,6 +2547,8 @@ export const GetWrDocument = gql`
   player(where: {id: $id}) {
     id
     skillLevel
+    favoriteMap
+    imageUrl
     createdAt
   }
 }

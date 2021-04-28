@@ -21,7 +21,7 @@ function HeroRecentMatchesCard({ userId }: HeroRecentMatchesCardProps) {
 
   return (
     <div>
-      <h3>Recent Matches</h3>
+      <h2>Recent Matches</h2>
       <div>
         {data.matches.map((match, index) => {
           const wonMatch = data.wonMatches.map((m) => m.id).includes(match.id);

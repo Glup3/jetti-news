@@ -96,6 +96,8 @@ query GetWR($id: Int!) {
   player(where: { id: $id }) {
     id
     skillLevel
+    favoriteMap
+    imageUrl
     createdAt
   }
 }
